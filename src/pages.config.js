@@ -1,25 +1,25 @@
-import Home from './pages/Home';
-import Search from './pages/Search';
 import AdDetails from './pages/AdDetails';
-import CreateAd from './pages/CreateAd';
-import Messages from './pages/Messages';
 import Chat from './pages/Chat';
+import CreateAd from './pages/CreateAd';
 import Favorites from './pages/Favorites';
-import Profile from './pages/Profile';
+import Home from './pages/Home';
+import Messages from './pages/Messages';
 import MyAds from './pages/MyAds';
+import Profile from './pages/Profile';
+import Search from './pages/Search';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "Home": Home,
-    "Search": Search,
     "AdDetails": AdDetails,
-    "CreateAd": CreateAd,
-    "Messages": Messages,
     "Chat": Chat,
+    "CreateAd": CreateAd,
     "Favorites": Favorites,
-    "Profile": Profile,
+    "Home": Home,
+    "Messages": Messages,
     "MyAds": MyAds,
+    "Profile": Profile,
+    "Search": Search,
 }
 
 export const pagesConfig = {

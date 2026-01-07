@@ -70,10 +70,7 @@ export default function Layout({ children, currentPageName }) {
 
   const navItems = [
     { name: 'Home', icon: Home, page: 'Home' },
-    { name: 'Buscar', icon: Search, page: 'Search' },
     { name: 'Anunciar', icon: PlusCircle, page: 'CreateAd', highlight: true },
-    { name: 'Mensagens', icon: MessageCircle, page: 'Messages', badge: unreadCount },
-    { name: 'Favoritos', icon: Heart, page: 'Favorites' },
   ];
 
   const handleLogout = () => {
@@ -96,13 +93,62 @@ export default function Layout({ children, currentPageName }) {
       <header className="hidden md:block fixed top-0 left-0 right-0 bg-white border-b border-slate-200 z-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link to={createPageUrl('Home')} className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">M</span>
-              </div>
-              <span className="text-xl font-bold text-slate-800">Mercado<span className="text-indigo-600">Local</span></span>
-            </Link>
+            {/* Left: Menu + Logo */}
+            <div className="flex items-center gap-3">
+              {isAuthenticated && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="rounded-full relative">
+                      <Menu className="w-5 h-5" />
+                      {unreadCount > 0 && (
+                        <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
+                          {unreadCount}
+                        </Badge>
+                      )}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-56">
+                    <DropdownMenuItem asChild>
+                      <Link to={createPageUrl('Messages')} className="flex items-center gap-2 cursor-pointer">
+                        <MessageCircle className="w-4 h-4" />
+                        Mensagens
+                        {unreadCount > 0 && (
+                          <Badge className="ml-auto h-5 w-5 flex items-center justify-center p-0 bg-red-500">
+                            {unreadCount}
+                          </Badge>
+                        )}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to={createPageUrl('Favorites')} className="flex items-center gap-2 cursor-pointer">
+                        <Heart className="w-4 h-4" />
+                        Favoritos
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link to={createPageUrl('MyAds')} className="flex items-center gap-2 cursor-pointer">
+                        <BarChart3 className="w-4 h-4" />
+                        Meus Anúncios
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to={createPageUrl('Dashboard')} className="flex items-center gap-2 cursor-pointer">
+                        <BarChart3 className="w-4 h-4" />
+                        Métricas
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+              
+              <Link to={createPageUrl('Home')} className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">M</span>
+                </div>
+                <span className="text-xl font-bold text-slate-800">Mercado<span className="text-indigo-600">Local</span></span>
+              </Link>
+            </div>
 
             {/* Search Bar */}
             <div className="flex-1 max-w-xl mx-8">
@@ -125,19 +171,6 @@ export default function Layout({ children, currentPageName }) {
 
               {isAuthenticated ? (
                 <>
-                  <Link to={createPageUrl('Messages')} className="relative p-2 hover:bg-slate-100 rounded-full transition-colors">
-                    <MessageCircle className="w-5 h-5 text-slate-600" />
-                    {unreadCount > 0 && (
-                      <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-red-500">
-                        {unreadCount}
-                      </Badge>
-                    )}
-                  </Link>
-
-                  <Link to={createPageUrl('Favorites')} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
-                    <Heart className="w-5 h-5 text-slate-600" />
-                  </Link>
-
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <button className="flex items-center gap-2 p-1.5 hover:bg-slate-100 rounded-full transition-colors">
@@ -199,22 +232,63 @@ export default function Layout({ children, currentPageName }) {
       {/* Mobile Header */}
       <header className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-slate-200 z-50">
         <div className="flex items-center justify-between px-4 h-14">
-          <Link to={createPageUrl('Home')} className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold">M</span>
-            </div>
-            <span className="font-bold text-slate-800">Mercado<span className="text-indigo-600">Local</span></span>
-          </Link>
+          <div className="flex items-center gap-2">
+            {isAuthenticated && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-9 w-9 relative">
+                    <Menu className="w-5 h-5" />
+                    {unreadCount > 0 && (
+                      <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
+                        {unreadCount}
+                      </Badge>
+                    )}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56">
+                  <DropdownMenuItem asChild>
+                    <Link to={createPageUrl('Messages')} className="flex items-center gap-2 cursor-pointer">
+                      <MessageCircle className="w-4 h-4" />
+                      Mensagens
+                      {unreadCount > 0 && (
+                        <Badge className="ml-auto h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-xs">
+                          {unreadCount}
+                        </Badge>
+                      )}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to={createPageUrl('Favorites')} className="flex items-center gap-2 cursor-pointer">
+                      <Heart className="w-4 h-4" />
+                      Favoritos
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to={createPageUrl('MyAds')} className="flex items-center gap-2 cursor-pointer">
+                      <BarChart3 className="w-4 h-4" />
+                      Meus Anúncios
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to={createPageUrl('Dashboard')} className="flex items-center gap-2 cursor-pointer">
+                      <BarChart3 className="w-4 h-4" />
+                      Métricas
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+            
+            <Link to={createPageUrl('Home')} className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold">M</span>
+              </div>
+              <span className="font-bold text-slate-800">Mercado<span className="text-indigo-600">Local</span></span>
+            </Link>
+          </div>
 
           <div className="flex items-center gap-2">
-            {isAuthenticated && unreadCount > 0 && (
-              <Link to={createPageUrl('Messages')} className="relative p-2">
-                <MessageCircle className="w-5 h-5 text-slate-600" />
-                <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
-                  {unreadCount}
-                </Badge>
-              </Link>
-            )}
             {!isAuthenticated && (
               <Button 
                 size="sm"
