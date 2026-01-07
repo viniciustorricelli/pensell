@@ -40,7 +40,23 @@ export default function Layout({ children, currentPageName }) {
         const authenticated = await base44.auth.isAuthenticated();
         setIsAuthenticated(authenticated);
         if (authenticated) {
-          const userData = await base44.auth.me();
+          let userData = await base44.auth.me();
+          
+          // Auto-reset topups if 24h have passed
+          if (userData.last_topup_reset && userData.available_topups === 0) {
+            const lastReset = new Date(userData.last_topup_reset);
+            const now = new Date();
+            const hoursSinceReset = (now - lastReset) / (1000 * 60 * 60);
+            
+            if (hoursSinceReset >= 24) {
+              await base44.auth.updateMe({
+                available_topups: 1,
+                last_topup_reset: now.toISOString()
+              });
+              userData = await base44.auth.me();
+            }
+          }
+          
           setUser(userData);
         }
       } catch (e) {

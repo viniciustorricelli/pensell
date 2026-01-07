@@ -35,7 +35,24 @@ export default function TopUp() {
           base44.auth.redirectToLogin(window.location.href);
           return;
         }
-        const userData = await base44.auth.me();
+        let userData = await base44.auth.me();
+        
+        // Auto-reset topups if 24h have passed
+        if (userData.last_topup_reset) {
+          const lastReset = moment(userData.last_topup_reset);
+          const now = moment();
+          const hoursSinceReset = now.diff(lastReset, 'hours');
+          
+          if (hoursSinceReset >= 24 && userData.available_topups === 0) {
+            await base44.auth.updateMe({
+              available_topups: 1,
+              last_topup_reset: now.toISOString()
+            });
+            userData = await base44.auth.me();
+            toast.success('Seu Top Up foi renovado!');
+          }
+        }
+        
         setUser(userData);
       } catch (e) {
         base44.auth.redirectToLogin(window.location.href);
@@ -74,23 +91,25 @@ export default function TopUp() {
 
   const handleActivateTopUp = async () => {
     if (!canUseTopup) {
-      toast.error('Você não tem top ups disponíveis. Aguarde até amanhã!');
+      toast.error('Você não tem top ups disponíveis. Aguarde 24 horas!');
       return;
     }
 
     setIsActivating(true);
     try {
+      const now = moment();
+      
       // Update ad to be boosted
       await base44.entities.Ad.update(ad.id, {
         is_boosted: true,
-        boost_expires_at: moment().add(24, 'hours').toISOString(),
+        boost_expires_at: now.clone().add(24, 'hours').toISOString(),
         boost_package: '24h'
       });
 
-      // Decrease user's available topups
+      // Decrease user's available topups and set the timer
       await base44.auth.updateMe({
-        available_topups: availableTopups - 1,
-        last_topup_reset: user.last_topup_reset || new Date().toISOString()
+        available_topups: 0,
+        last_topup_reset: now.toISOString()
       });
 
       toast.success('Top Up ativado! Seu anúncio agora está em destaque por 24h');
