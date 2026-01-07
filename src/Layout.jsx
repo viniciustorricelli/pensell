@@ -252,7 +252,7 @@ export default function Layout({ children, currentPageName }) {
             {isAuthenticated && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-11 w-11 relative -my-2">
+                  <Button variant="ghost" size="icon" className="h-10 w-10 relative p-2">
                     <Menu className="w-6 h-6" />
                     {unreadCount > 0 && (
                       <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
