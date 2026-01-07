@@ -117,8 +117,6 @@ export default function Home() {
   };
 
   const handleRefresh = () => {
-    setPage(1);
-    setAllAds([]);
     queryClient.invalidateQueries(['ads']);
     queryClient.invalidateQueries(['boosted-ads']);
   };

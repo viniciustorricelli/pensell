@@ -247,12 +247,12 @@ export default function Layout({ children, currentPageName }) {
 
       {/* Mobile Header */}
       <header className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-slate-200 z-50">
-        <div className="flex items-center justify-between px-4 h-14">
+        <div className="flex items-center justify-between px-4 h-14 py-2">
           <div className="flex items-center gap-2">
             {isAuthenticated && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-11 w-11 relative">
+                  <Button variant="ghost" size="icon" className="h-11 w-11 relative -my-2">
                     <Menu className="w-6 h-6" />
                     {unreadCount > 0 && (
                       <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
