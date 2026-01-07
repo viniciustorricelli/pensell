@@ -381,10 +381,10 @@ export default function AdDetails() {
                     <Button variant="outline">Editar Anúncio</Button>
                   </Link>
                   {!ad.is_boosted && (
-                    <Link to={createPageUrl(`BoostAd?id=${ad.id}`)}>
-                      <Button className="bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white">
+                    <Link to={createPageUrl(`TopUp?id=${ad.id}`)}>
+                      <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white">
                         <Zap className="w-4 h-4 mr-2" />
-                        Impulsionar
+                        Top Up ({user?.available_topups || 0})
                       </Button>
                     </Link>
                   )}

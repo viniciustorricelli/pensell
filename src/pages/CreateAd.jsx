@@ -116,7 +116,7 @@ export default function CreateAd() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!formData.title || !formData.description || !formData.price || !formData.category || !formData.location_city) {
+    if (!formData.title || !formData.description || !formData.price || !formData.category || !formData.location_city || !formData.location_neighborhood) {
       toast.error('Preencha todos os campos obrigatórios');
       return;
     }
@@ -332,13 +332,13 @@ export default function CreateAd() {
               </div>
               <div>
                 <Label htmlFor="neighborhood" className="text-sm text-slate-600 mb-2 block">
-                  Bairro (opcional)
+                  Comunidade *
                 </Label>
                 <Input
                   id="neighborhood"
                   value={formData.location_neighborhood}
                   onChange={(e) => setFormData({...formData, location_neighborhood: e.target.value})}
-                  placeholder="Ex: Centro"
+                  placeholder="Ex: Universidade"
                   className="h-12"
                 />
               </div>

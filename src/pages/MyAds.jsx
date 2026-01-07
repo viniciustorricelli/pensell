@@ -213,14 +213,14 @@ export default function MyAds() {
           )}
 
           {!ad.is_boosted && ad.status === 'active' && (
-            <Link to={createPageUrl(`BoostAd?id=${ad.id}`)}>
+            <Link to={createPageUrl(`TopUp?id=${ad.id}`)}>
               <Button 
                 size="sm" 
                 variant="outline" 
-                className="mt-2 text-amber-600 border-amber-300 hover:bg-amber-50"
+                className="mt-2 text-indigo-600 border-indigo-300 hover:bg-indigo-50"
               >
                 <Zap className="w-3.5 h-3.5 mr-1" />
-                Impulsionar
+                Top Up
               </Button>
             </Link>
           )}

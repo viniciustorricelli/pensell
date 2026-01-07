@@ -98,8 +98,8 @@ export default function Layout({ children, currentPageName }) {
               {isAuthenticated && (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="rounded-full relative">
-                      <Menu className="w-5 h-5" />
+                    <Button variant="ghost" size="icon" className="rounded-full relative h-10 w-10">
+                      <Menu className="w-6 h-6" />
                       {unreadCount > 0 && (
                         <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
                           {unreadCount}
@@ -236,8 +236,8 @@ export default function Layout({ children, currentPageName }) {
             {isAuthenticated && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-9 w-9 relative">
-                    <Menu className="w-5 h-5" />
+                  <Button variant="ghost" size="icon" className="h-11 w-11 relative">
+                    <Menu className="w-6 h-6" />
                     {unreadCount > 0 && (
                       <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
                         {unreadCount}
