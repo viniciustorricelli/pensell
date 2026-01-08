@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Loader2, RefreshCw, ChevronLeft, ChevronRight, Search, MapPin } from 'lucide-react';
 import AdCard from '@/components/ads/AdCard';
 import BoostedAdsCarousel from '@/components/ads/BoostedAdsCarousel';
-import CategoryFilter from '@/components/ads/CategoryFilter';
+import CategoryFilterCollapsible from '@/components/ads/CategoryFilterCollapsible';
 import CommunitySelector from '@/components/CommunitySelector';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -155,20 +155,18 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto">
-        {/* Community Selector */}
+        {/* Community Selector & Category Filter */}
         {user && user.current_community_id && (
-          <div className="pt-4 pb-2 px-4 bg-slate-50 flex justify-center">
-            <CommunitySelector user={user} onCommunityChange={handleCommunityChange} />
+          <div className="pt-4 pb-4 px-4 bg-slate-50 sticky top-14 md:top-16 z-30 border-b border-slate-100">
+            <div className="flex justify-center items-center gap-3">
+              <CommunitySelector user={user} onCommunityChange={handleCommunityChange} />
+              <CategoryFilterCollapsible 
+                selected={selectedCategory} 
+                onChange={setSelectedCategory} 
+              />
+            </div>
           </div>
         )}
-
-        {/* Category Filter */}
-        <div className="py-4 bg-slate-50 sticky top-14 md:top-16 z-30 border-b border-slate-100">
-          <CategoryFilter 
-            selected={selectedCategory} 
-            onChange={setSelectedCategory} 
-          />
-        </div>
 
         {/* Search Bar */}
         <div className="px-4 pt-4">
