@@ -148,12 +148,6 @@ export default function Layout({ children, currentPageName }) {
                         Meus Anúncios
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link to={createPageUrl('Dashboard')} className="flex items-center gap-2 cursor-pointer">
-                        <BarChart3 className="w-4 h-4" />
-                        Métricas
-                      </Link>
-                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
@@ -215,12 +209,6 @@ export default function Layout({ children, currentPageName }) {
                         <Link to={createPageUrl('MyAds')} className="flex items-center gap-2 cursor-pointer">
                           <BarChart3 className="w-4 h-4" />
                           Meus Anúncios
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <Link to={createPageUrl('Dashboard')} className="flex items-center gap-2 cursor-pointer">
-                          <BarChart3 className="w-4 h-4" />
-                          Métricas
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />

@@ -297,24 +297,6 @@ export default function Profile() {
 
           <Separator />
 
-          <Link 
-            to={createPageUrl('Dashboard')} 
-            className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors"
-          >
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-100 rounded-xl">
-                <BarChart3 className="w-5 h-5 text-green-600" />
-              </div>
-              <div>
-                <p className="font-medium text-slate-800">Métricas e Estatísticas</p>
-                <p className="text-sm text-slate-500">Acompanhe seu desempenho</p>
-              </div>
-            </div>
-            <ChevronRight className="w-5 h-5 text-slate-400" />
-          </Link>
-
-          <Separator />
-
           <button 
             onClick={handleLogout}
             className="w-full flex items-center justify-between p-4 hover:bg-red-50 transition-colors text-left"
