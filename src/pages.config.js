@@ -1,6 +1,7 @@
 import AdDetails from './pages/AdDetails';
 import Chat from './pages/Chat';
 import CreateAd from './pages/CreateAd';
+import EditAd from './pages/EditAd';
 import Favorites from './pages/Favorites';
 import Home from './pages/Home';
 import Messages from './pages/Messages';
@@ -8,7 +9,6 @@ import MyAds from './pages/MyAds';
 import Profile from './pages/Profile';
 import Search from './pages/Search';
 import TopUp from './pages/TopUp';
-import EditAd from './pages/EditAd';
 import Register from './pages/Register';
 import SelectCommunity from './pages/SelectCommunity';
 import __Layout from './Layout.jsx';
@@ -18,6 +18,7 @@ export const PAGES = {
     "AdDetails": AdDetails,
     "Chat": Chat,
     "CreateAd": CreateAd,
+    "EditAd": EditAd,
     "Favorites": Favorites,
     "Home": Home,
     "Messages": Messages,
@@ -25,7 +26,6 @@ export const PAGES = {
     "Profile": Profile,
     "Search": Search,
     "TopUp": TopUp,
-    "EditAd": EditAd,
     "Register": Register,
     "SelectCommunity": SelectCommunity,
 }

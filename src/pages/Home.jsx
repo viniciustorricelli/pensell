@@ -23,6 +23,13 @@ export default function Home() {
         const authenticated = await base44.auth.isAuthenticated();
         if (authenticated) {
           const userData = await base44.auth.me();
+          
+          // Redirect to community selection if user doesn't have one
+          if (!userData.current_community_id) {
+            window.location.href = createPageUrl('SelectCommunity');
+            return;
+          }
+          
           setUser(userData);
         }
       } catch (e) {}
