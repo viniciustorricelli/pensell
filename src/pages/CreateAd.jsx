@@ -128,6 +128,16 @@ export default function CreateAd() {
 
     setIsSubmitting(true);
     try {
+      if (!user.current_community_id) {
+        toast.error('Selecione uma comunidade primeiro');
+        window.location.href = createPageUrl('SelectCommunity');
+        return;
+      }
+
+      // Get community info
+      const communities = await base44.entities.Community.filter({ id: user.current_community_id });
+      const community = communities[0];
+
       const ad = await base44.entities.Ad.create({
         ...formData,
         price: parseFloat(formData.price),
@@ -138,7 +148,9 @@ export default function CreateAd() {
         views_count: 0,
         saves_count: 0,
         chat_clicks: 0,
-        is_boosted: false
+        is_boosted: false,
+        community_id: user.current_community_id,
+        community_name: community?.name || ''
       });
 
       toast.success('Anúncio publicado com sucesso!');

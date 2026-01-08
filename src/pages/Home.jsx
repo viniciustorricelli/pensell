@@ -74,8 +74,9 @@ export default function Home() {
   // Update allAds when regularAds changes
   useEffect(() => {
     setAllAds(regularAds);
-    setHasMore(regularAds.length >= 10);
-  }, [regularAds]);
+    // Check if there are more ads by seeing if we got a full page
+    setHasMore(regularAds.length === 10);
+  }, [regularAds, page]);
 
   // Reset when category changes
   useEffect(() => {
