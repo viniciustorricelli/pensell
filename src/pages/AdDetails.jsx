@@ -284,11 +284,6 @@ export default function AdDetails() {
   };
 
   const handleMarkAsSold = async () => {
-    if ((ad.chat_clicks || 0) === 0) {
-      toast.error('Este anúncio ainda não teve interações. Aguarde até que pelo menos um usuário clique para conversar.');
-      return;
-    }
-
     if (!confirm('Marcar este anúncio como vendido?')) {
       return;
     }
@@ -495,7 +490,7 @@ export default function AdDetails() {
                     <Button 
                       variant="outline"
                       onClick={handleMarkAsSold}
-                      disabled={isMarkingSold || (ad.chat_clicks || 0) === 0}
+                      disabled={isMarkingSold}
                       className="border-green-500 text-green-600 hover:bg-green-50"
                     >
                       {isMarkingSold ? (
@@ -519,12 +514,7 @@ export default function AdDetails() {
                     )}
                     Excluir Anúncio
                   </Button>
-                </div>
-                {(ad.chat_clicks || 0) === 0 && ad.status !== 'sold' && (
-                  <p className="text-xs text-slate-500 mt-3">
-                    * Para marcar como vendido, é necessário que pelo menos um usuário tenha clicado para conversar.
-                  </p>
-                )}
+                  </div>
               </div>
             )}
           </div>
