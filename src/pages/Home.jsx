@@ -149,11 +149,7 @@ export default function Home() {
   };
 
   const handleCommunityChange = () => {
-    const loadUser = async () => {
-      const userData = await base44.auth.me();
-      setUser(userData);
-    };
-    loadUser();
+    window.location.reload();
   };
 
   return (
