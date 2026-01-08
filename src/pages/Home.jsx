@@ -168,8 +168,21 @@ export default function Home() {
           </div>
         )}
 
-        {/* Search Bar */}
-        <div className="px-4 pt-4">
+        {!user ? (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+          </div>
+        ) : !user.current_community_id ? (
+          <div className="text-center py-20 px-4">
+            <p className="text-slate-500 mb-4">Selecione uma comunidade para ver os anúncios</p>
+            <Button onClick={() => window.location.href = '/SelectCommunity'} className="bg-blue-600 hover:bg-blue-700">
+              Selecionar Comunidade
+            </Button>
+          </div>
+        ) : (
+          <>
+            {/* Search Bar */}
+            <div className="px-4 pt-4">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <Input
@@ -259,7 +272,8 @@ export default function Home() {
               </div>
             </>
           )}
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
