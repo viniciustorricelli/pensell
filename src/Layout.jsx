@@ -104,8 +104,8 @@ export default function Layout({ children, currentPageName }) {
     <div className="min-h-screen bg-slate-50">
       <style>{`
         :root {
-          --primary: #6366f1;
-          --primary-dark: #4f46e5;
+          --primary: #0ea5e9;
+          --primary-dark: #0284c7;
           --accent: #f59e0b;
           --success: #10b981;
           --background: #f8fafc;

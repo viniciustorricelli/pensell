@@ -50,6 +50,7 @@ export default function Home() {
         ad.boost_expires_at && moment(ad.boost_expires_at).isAfter(moment())
       );
     },
+    enabled: !!user?.current_community_id,
     refetchInterval: 30000
   });
 
@@ -79,7 +80,8 @@ export default function Home() {
       
       const skip = (page - 1) * 10;
       return allAds.slice(skip, skip + 10);
-    }
+    },
+    enabled: !!user?.current_community_id
   });
 
   // Update allAds when regularAds changes
@@ -159,7 +161,7 @@ export default function Home() {
       <div className="max-w-7xl mx-auto">
         {/* Community Selector */}
         {user && user.current_community_id && (
-          <div className="pt-4 pb-2 px-4 bg-slate-50">
+          <div className="pt-4 pb-2 px-4 bg-slate-50 flex justify-center">
             <CommunitySelector user={user} onCommunityChange={handleCommunityChange} />
           </div>
         )}
@@ -216,7 +218,7 @@ export default function Home() {
 
           {isLoading && page === 1 ? (
             <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+              <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
             </div>
           ) : allAds.length === 0 ? (
             <div className="text-center py-20">
