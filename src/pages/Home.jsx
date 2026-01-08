@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Loader2, RefreshCw } from 'lucide-react';
+import { Loader2, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
 import AdCard from '@/components/ads/AdCard';
 import BoostedAdsCarousel from '@/components/ads/BoostedAdsCarousel';
 import CategoryFilter from '@/components/ads/CategoryFilter';
@@ -54,30 +54,23 @@ export default function Home() {
       if (selectedCategory) {
         filter.category = selectedCategory;
       }
-      const ads = await base44.entities.Ad.filter(filter, '-created_date', 20);
-      return ads;
+      const skip = (page - 1) * 10;
+      const ads = await base44.entities.Ad.filter(filter, '-created_date', 10);
+      // Manual skip since SDK doesn't support it directly
+      return ads.slice(skip, skip + 10);
     },
-    refetchInterval: 30000
+    enabled: true
   });
 
   // Update allAds when regularAds changes
   useEffect(() => {
-    if (page === 1) {
-      setAllAds(regularAds);
-    } else {
-      setAllAds(prev => {
-        const existingIds = new Set(prev.map(a => a.id));
-        const newAds = regularAds.filter(a => !existingIds.has(a.id));
-        return [...prev, ...newAds];
-      });
-    }
-    setHasMore(regularAds.length >= 20);
-  }, [regularAds, page]);
+    setAllAds(regularAds);
+    setHasMore(regularAds.length >= 10);
+  }, [regularAds]);
 
   // Reset when category changes
   useEffect(() => {
     setPage(1);
-    setAllAds([]);
   }, [selectedCategory]);
 
   // Fetch favorites
@@ -110,46 +103,27 @@ export default function Home() {
     queryClient.invalidateQueries(['favorites']);
   };
 
-  const loadMore = () => {
-    if (!isFetching && hasMore) {
+
+
+  const handleRefresh = () => {
+    queryClient.invalidateQueries(['ads']);
+    queryClient.invalidateQueries(['boosted-ads']);
+    toast.success('Anúncios atualizados');
+  };
+
+  const handleNextPage = () => {
+    if (hasMore && !isFetching) {
       setPage(prev => prev + 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
-  const handleRefresh = async () => {
-    try {
-      const filter = { status: 'active' };
-      if (selectedCategory) {
-        filter.category = selectedCategory;
-      }
-      const newAds = await base44.entities.Ad.filter(filter, '-created_date', 20);
-      
-      setAllAds(prev => {
-        const existingIds = new Set(prev.map(a => a.id));
-        const freshAds = newAds.filter(a => !existingIds.has(a.id));
-        return [...freshAds, ...prev];
-      });
-      
-      queryClient.invalidateQueries(['boosted-ads']);
-      if (newAds.length > 0) {
-        toast.success(`${newAds.length} novos anúncios carregados`);
-      }
-    } catch (error) {
-      toast.error('Erro ao atualizar');
+  const handlePrevPage = () => {
+    if (page > 1) {
+      setPage(prev => prev - 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
-
-  // Infinite scroll observer
-  const observerRef = useCallback(node => {
-    if (!node) return;
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && hasMore && !isFetching) {
-        loadMore();
-      }
-    }, { threshold: 0.1 });
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [hasMore, isFetching]);
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -213,7 +187,7 @@ export default function Home() {
           ) : (
             <>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {allAds.map((ad, index) => (
+                {allAds.map((ad) => (
                   <AdCard 
                     key={ad.id}
                     ad={ad}
@@ -223,14 +197,32 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Load More Trigger */}
-              {hasMore && (
-                <div ref={observerRef} className="flex justify-center py-8">
-                  {isFetching && (
-                    <Loader2 className="w-6 h-6 animate-spin text-indigo-600" />
-                  )}
-                </div>
-              )}
+              {/* Pagination */}
+              <div className="flex items-center justify-center gap-4 mt-8">
+                <Button
+                  variant="outline"
+                  onClick={handlePrevPage}
+                  disabled={page === 1}
+                  className="gap-2"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  Anterior
+                </Button>
+                
+                <span className="text-sm text-slate-600">
+                  Página {page}
+                </span>
+                
+                <Button
+                  variant="outline"
+                  onClick={handleNextPage}
+                  disabled={!hasMore || isFetching}
+                  className="gap-2"
+                >
+                  Próxima
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
             </>
           )}
         </div>
