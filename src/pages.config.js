@@ -8,8 +8,8 @@ import Messages from './pages/Messages';
 import MyAds from './pages/MyAds';
 import Profile from './pages/Profile';
 import Search from './pages/Search';
-import TopUp from './pages/TopUp';
 import SelectCommunity from './pages/SelectCommunity';
+import TopUp from './pages/TopUp';
 import __Layout from './Layout.jsx';
 
 
@@ -24,8 +24,8 @@ export const PAGES = {
     "MyAds": MyAds,
     "Profile": Profile,
     "Search": Search,
-    "TopUp": TopUp,
     "SelectCommunity": SelectCommunity,
+    "TopUp": TopUp,
 }
 
 export const pagesConfig = {

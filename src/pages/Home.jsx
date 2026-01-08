@@ -23,13 +23,6 @@ export default function Home() {
         const authenticated = await base44.auth.isAuthenticated();
         if (authenticated) {
           const userData = await base44.auth.me();
-          
-          // Redirect to community selection if user doesn't have one
-          if (!userData.current_community_id) {
-            window.location.href = createPageUrl('SelectCommunity');
-            return;
-          }
-          
           setUser(userData);
         }
       } catch (e) {}
@@ -54,7 +47,6 @@ export default function Home() {
         ad.boost_expires_at && moment(ad.boost_expires_at).isAfter(moment())
       );
     },
-    enabled: !!user,
     refetchInterval: 30000
   });
 
@@ -74,8 +66,7 @@ export default function Home() {
       const allAds = await base44.entities.Ad.filter(filter, '-created_date', 100);
       const skip = (page - 1) * 10;
       return allAds.slice(skip, skip + 10);
-    },
-    enabled: !!user
+    }
   });
 
   // Update allAds when regularAds changes
