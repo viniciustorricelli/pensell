@@ -263,7 +263,7 @@ export default function Profile() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
             <p className="text-2xl font-bold text-indigo-600">{myAds.length}</p>
             <p className="text-sm text-slate-500">Anúncios</p>
@@ -271,10 +271,6 @@ export default function Profile() {
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
             <p className="text-2xl font-bold text-indigo-600">{soldAds.length}</p>
             <p className="text-sm text-slate-500">Vendas</p>
-          </div>
-          <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
-            <p className="text-2xl font-bold text-indigo-600">{reviews.length}</p>
-            <p className="text-sm text-slate-500">Avaliações</p>
           </div>
         </div>
 
