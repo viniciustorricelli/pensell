@@ -161,9 +161,9 @@ export default function Layout({ children, currentPageName }) {
               </Link>
             </div>
 
-            {/* Community Selector */}
-            <div className="flex-1 max-w-xl mx-8">
-              {isAuthenticated && user && (
+            {/* Community Selector & Search */}
+            <div className="flex-1 max-w-xl mx-8 flex items-center gap-4">
+              {isAuthenticated && user && user.current_community_id && (
                 <CommunitySelector 
                   user={user} 
                   onCommunityChange={() => {
@@ -176,6 +176,12 @@ export default function Layout({ children, currentPageName }) {
                   }}
                 />
               )}
+              <Link to={createPageUrl('Search')} className="flex-1">
+                <div className="flex items-center bg-slate-100 rounded-full px-4 py-2.5 hover:bg-slate-200 transition-colors cursor-pointer">
+                  <Search className="w-5 h-5 text-slate-400" />
+                  <span className="ml-3 text-slate-500">Buscar...</span>
+                </div>
+              </Link>
             </div>
 
             {/* Nav Items */}
@@ -295,6 +301,19 @@ export default function Layout({ children, currentPageName }) {
           </div>
 
           <div className="flex items-center gap-2">
+            {isAuthenticated && user && user.current_community_id && (
+              <CommunitySelector 
+                user={user} 
+                onCommunityChange={() => {
+                  setUser(null);
+                  const loadUser = async () => {
+                    const userData = await base44.auth.me();
+                    setUser(userData);
+                  };
+                  loadUser();
+                }}
+              />
+            )}
             {!isAuthenticated && (
               <Button 
                 size="sm"
