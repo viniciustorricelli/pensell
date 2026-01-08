@@ -149,15 +149,20 @@ export default function EditAd() {
     setIsSubmitting(true);
     try {
       await base44.entities.Ad.update(adId, {
-        ...formData,
-        price: parseFloat(formData.price)
+        title: formData.title,
+        description: formData.description,
+        price: parseFloat(formData.price),
+        category: formData.category,
+        location_city: formData.location_city,
+        location_neighborhood: formData.location_neighborhood,
+        images: formData.images
       });
 
       toast.success('Anúncio atualizado com sucesso!');
       window.location.href = createPageUrl(`AdDetails?id=${adId}`);
     } catch (error) {
+      console.error('Erro ao atualizar:', error);
       toast.error('Erro ao atualizar anúncio');
-    } finally {
       setIsSubmitting(false);
     }
   };
