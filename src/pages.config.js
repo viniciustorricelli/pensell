@@ -6,10 +6,10 @@ import Favorites from './pages/Favorites';
 import Home from './pages/Home';
 import Messages from './pages/Messages';
 import MyAds from './pages/MyAds';
-import Profile from './pages/Profile';
 import Search from './pages/Search';
 import SelectCommunity from './pages/SelectCommunity';
 import TopUp from './pages/TopUp';
+import Profile from './pages/Profile';
 import __Layout from './Layout.jsx';
 
 
@@ -22,10 +22,10 @@ export const PAGES = {
     "Home": Home,
     "Messages": Messages,
     "MyAds": MyAds,
-    "Profile": Profile,
     "Search": Search,
     "SelectCommunity": SelectCommunity,
     "TopUp": TopUp,
+    "Profile": Profile,
 }
 
 export const pagesConfig = {
