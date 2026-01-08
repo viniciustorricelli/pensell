@@ -116,9 +116,27 @@ export default function Home() {
     }
   };
 
-  const handleRefresh = () => {
-    queryClient.invalidateQueries(['ads']);
-    queryClient.invalidateQueries(['boosted-ads']);
+  const handleRefresh = async () => {
+    try {
+      const filter = { status: 'active' };
+      if (selectedCategory) {
+        filter.category = selectedCategory;
+      }
+      const newAds = await base44.entities.Ad.filter(filter, '-created_date', 20);
+      
+      setAllAds(prev => {
+        const existingIds = new Set(prev.map(a => a.id));
+        const freshAds = newAds.filter(a => !existingIds.has(a.id));
+        return [...freshAds, ...prev];
+      });
+      
+      queryClient.invalidateQueries(['boosted-ads']);
+      if (newAds.length > 0) {
+        toast.success(`${newAds.length} novos anúncios carregados`);
+      }
+    } catch (error) {
+      toast.error('Erro ao atualizar');
+    }
   };
 
   // Infinite scroll observer

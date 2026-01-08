@@ -252,16 +252,22 @@ export default function AdDetails() {
   }, [ad?.is_boosted, ad?.boost_expires_at]);
 
   const handleReport = async () => {
+    if (!user) {
+      toast.error('Faça login para denunciar');
+      return;
+    }
+
     setIsReporting(true);
     try {
       await base44.integrations.Core.SendEmail({
         to: 'vinicius.ts16@gmail.com',
         subject: `Denúncia de Anúncio - ${ad.title}`,
-        body: `Um usuário denunciou o anúncio:\n\nID: ${ad.id}\nTítulo: ${ad.title}\nVendedor: ${ad.seller_name}\nURL: ${window.location.href}\n\nUsuário que denunciou: ${user?.full_name || 'Não identificado'} (${user?.email || 'N/A'})`
+        body: `Um usuário denunciou o anúncio:\n\nID: ${ad.id}\nTítulo: ${ad.title}\nVendedor: ${ad.seller_name}\nURL: ${window.location.href}\n\nUsuário que denunciou: ${user.full_name} (${user.email})`
       });
-      toast.success('Denúncia enviada com sucesso!');
+      toast.success('Denúncia enviada! Obrigado pela colaboração.');
     } catch (error) {
-      toast.error('Erro ao enviar denúncia');
+      console.error('Erro ao denunciar:', error);
+      toast.error('Erro ao enviar denúncia. Tente novamente.');
     } finally {
       setIsReporting(false);
     }
@@ -293,6 +299,13 @@ export default function AdDetails() {
       await base44.entities.Ad.update(ad.id, {
         status: 'sold'
       });
+      
+      // Increment seller's total_sales
+      const currentUser = await base44.auth.me();
+      await base44.auth.updateMe({
+        total_sales: (currentUser.total_sales || 0) + 1
+      });
+      
       toast.success('Anúncio marcado como vendido!');
       queryClient.invalidateQueries(['ad', adId]);
     } catch (error) {
@@ -566,7 +579,7 @@ export default function AdDetails() {
 
               <button 
                 onClick={handleReport}
-                disabled={isReporting || !user}
+                disabled={isReporting}
                 className="flex items-center gap-2 text-sm text-slate-500 hover:text-red-500 transition-colors disabled:opacity-50"
               >
                 {isReporting ? (
