@@ -222,30 +222,30 @@ export default function AdDetails() {
     }).format(price);
   };
 
-  const calculateTimeRemaining = () => {
-    if (!ad?.boost_expires_at) return null;
-    const now = moment();
-    const expires = moment(ad.boost_expires_at);
-    const diff = expires.diff(now);
-    
-    if (diff <= 0) return null;
-    
-    const duration = moment.duration(diff);
-    if (duration.days() > 0) {
-      return `${duration.days()}d ${duration.hours()}h ${duration.minutes()}m`;
-    }
-    return `${duration.hours()}h ${duration.minutes()}m`;
-  };
-
   // Update timer every minute
   useEffect(() => {
     if (ad?.is_boosted && ad?.boost_expires_at) {
+      const calculateTimeRemaining = () => {
+        if (!ad?.boost_expires_at) return null;
+        const now = moment();
+        const expires = moment(ad.boost_expires_at);
+        const diff = expires.diff(now);
+        
+        if (diff <= 0) return null;
+        
+        const duration = moment.duration(diff);
+        if (duration.days() > 0) {
+          return `${duration.days()}d ${duration.hours()}h ${duration.minutes()}m`;
+        }
+        return `${duration.hours()}h ${duration.minutes()}m`;
+      };
+
       const updateTimer = () => {
         setTimeRemaining(calculateTimeRemaining());
       };
       
       updateTimer();
-      const interval = setInterval(updateTimer, 60000); // Update every minute
+      const interval = setInterval(updateTimer, 60000);
       
       return () => clearInterval(interval);
     }
