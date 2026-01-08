@@ -18,6 +18,7 @@ import {
   Settings,
   ChevronDown
 } from 'lucide-react';
+import CommunitySelector from '@/components/CommunitySelector';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -160,14 +161,21 @@ export default function Layout({ children, currentPageName }) {
               </Link>
             </div>
 
-            {/* Search Bar */}
+            {/* Community Selector */}
             <div className="flex-1 max-w-xl mx-8">
-              <Link to={createPageUrl('Search')} className="block">
-                <div className="flex items-center bg-slate-100 rounded-full px-4 py-2.5 hover:bg-slate-200 transition-colors cursor-pointer">
-                  <Search className="w-5 h-5 text-slate-400" />
-                  <span className="ml-3 text-slate-500">Buscar produtos ou serviços...</span>
-                </div>
-              </Link>
+              {isAuthenticated && user && (
+                <CommunitySelector 
+                  user={user} 
+                  onCommunityChange={() => {
+                    setUser(null);
+                    const loadUser = async () => {
+                      const userData = await base44.auth.me();
+                      setUser(userData);
+                    };
+                    loadUser();
+                  }}
+                />
+              )}
             </div>
 
             {/* Nav Items */}

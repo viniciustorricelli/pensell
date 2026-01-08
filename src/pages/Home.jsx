@@ -32,34 +32,43 @@ export default function Home() {
 
   // Fetch boosted ads
   const { data: boostedAds = [] } = useQuery({
-    queryKey: ['boosted-ads'],
+    queryKey: ['boosted-ads', user?.current_community_id],
     queryFn: async () => {
-      const ads = await base44.entities.Ad.filter({
+      const filter = {
         is_boosted: true,
         status: 'active'
-      }, '-created_date');
+      };
+      if (user?.current_community_id) {
+        filter.community_id = user.current_community_id;
+      }
+      const ads = await base44.entities.Ad.filter(filter, '-created_date');
       // Filter out expired boosts
       return ads.filter(ad => 
         ad.boost_expires_at && moment(ad.boost_expires_at).isAfter(moment())
       );
     },
+    enabled: !!user,
     refetchInterval: 30000
   });
 
   // Fetch regular ads with pagination
   const { data: regularAds = [], isLoading, isFetching } = useQuery({
-    queryKey: ['ads', selectedCategory, page],
+    queryKey: ['ads', selectedCategory, page, user?.current_community_id],
     queryFn: async () => {
       const filter = { status: 'active' };
       if (selectedCategory) {
         filter.category = selectedCategory;
       }
+      if (user?.current_community_id) {
+        filter.community_id = user.current_community_id;
+      }
+      
+      // Fetch more ads than needed to handle pagination
+      const allAds = await base44.entities.Ad.filter(filter, '-created_date', 100);
       const skip = (page - 1) * 10;
-      const ads = await base44.entities.Ad.filter(filter, '-created_date', 10);
-      // Manual skip since SDK doesn't support it directly
-      return ads.slice(skip, skip + 10);
+      return allAds.slice(skip, skip + 10);
     },
-    enabled: true
+    enabled: !!user
   });
 
   // Update allAds when regularAds changes
@@ -127,18 +136,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
-          <h1 className="text-2xl md:text-4xl font-bold mb-2">
-            Encontre o que precisa
-          </h1>
-          <p className="text-indigo-100 text-sm md:text-base">
-            Produtos e serviços perto de você
-          </p>
-        </div>
-      </div>
-
       <div className="max-w-7xl mx-auto">
         {/* Category Filter */}
         <div className="py-4 bg-slate-50 sticky top-14 md:top-16 z-30 border-b border-slate-100">

@@ -9,6 +9,8 @@ import Profile from './pages/Profile';
 import Search from './pages/Search';
 import TopUp from './pages/TopUp';
 import EditAd from './pages/EditAd';
+import Register from './pages/Register';
+import SelectCommunity from './pages/SelectCommunity';
 import __Layout from './Layout.jsx';
 
 
@@ -24,6 +26,8 @@ export const PAGES = {
     "Search": Search,
     "TopUp": TopUp,
     "EditAd": EditAd,
+    "Register": Register,
+    "SelectCommunity": SelectCommunity,
 }
 
 export const pagesConfig = {
