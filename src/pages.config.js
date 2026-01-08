@@ -8,6 +8,7 @@ import MyAds from './pages/MyAds';
 import Profile from './pages/Profile';
 import Search from './pages/Search';
 import TopUp from './pages/TopUp';
+import EditAd from './pages/EditAd';
 import __Layout from './Layout.jsx';
 
 
@@ -22,6 +23,7 @@ export const PAGES = {
     "Profile": Profile,
     "Search": Search,
     "TopUp": TopUp,
+    "EditAd": EditAd,
 }
 
 export const pagesConfig = {
