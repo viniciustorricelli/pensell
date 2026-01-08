@@ -17,7 +17,10 @@ import {
   Shield,
   Flag,
   Loader2,
-  Check
+  Check,
+  Edit2,
+  Trash2,
+  CheckCircle2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -32,9 +35,6 @@ import {
 } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 import moment from 'moment';
-import 'moment/locale/pt-br';
-
-moment.locale('pt-br');
 
 export default function AdDetails() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -43,6 +43,10 @@ export default function AdDetails() {
   const [user, setUser] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showBoostDialog, setShowBoostDialog] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(null);
+  const [isReporting, setIsReporting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isMarkingSold, setIsMarkingSold] = useState(false);
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -218,7 +222,7 @@ export default function AdDetails() {
     }).format(price);
   };
 
-  const getTimeRemaining = () => {
+  const calculateTimeRemaining = () => {
     if (!ad?.boost_expires_at) return null;
     const now = moment();
     const expires = moment(ad.boost_expires_at);
@@ -231,6 +235,76 @@ export default function AdDetails() {
       return `${duration.days()}d ${duration.hours()}h ${duration.minutes()}m`;
     }
     return `${duration.hours()}h ${duration.minutes()}m`;
+  };
+
+  // Update timer every minute
+  useEffect(() => {
+    if (ad?.is_boosted && ad?.boost_expires_at) {
+      const updateTimer = () => {
+        setTimeRemaining(calculateTimeRemaining());
+      };
+      
+      updateTimer();
+      const interval = setInterval(updateTimer, 60000); // Update every minute
+      
+      return () => clearInterval(interval);
+    }
+  }, [ad?.is_boosted, ad?.boost_expires_at]);
+
+  const handleReport = async () => {
+    setIsReporting(true);
+    try {
+      await base44.integrations.Core.SendEmail({
+        to: 'vinicius.ts16@gmail.com',
+        subject: `Denúncia de Anúncio - ${ad.title}`,
+        body: `Um usuário denunciou o anúncio:\n\nID: ${ad.id}\nTítulo: ${ad.title}\nVendedor: ${ad.seller_name}\nURL: ${window.location.href}\n\nUsuário que denunciou: ${user?.full_name || 'Não identificado'} (${user?.email || 'N/A'})`
+      });
+      toast.success('Denúncia enviada com sucesso!');
+    } catch (error) {
+      toast.error('Erro ao enviar denúncia');
+    } finally {
+      setIsReporting(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!confirm('Tem certeza que deseja excluir este anúncio? Esta ação não pode ser desfeita.')) {
+      return;
+    }
+    
+    setIsDeleting(true);
+    try {
+      await base44.entities.Ad.delete(ad.id);
+      toast.success('Anúncio excluído com sucesso');
+      window.location.href = createPageUrl('MyAds');
+    } catch (error) {
+      toast.error('Erro ao excluir anúncio');
+      setIsDeleting(false);
+    }
+  };
+
+  const handleMarkAsSold = async () => {
+    if ((ad.chat_clicks || 0) === 0) {
+      toast.error('Este anúncio ainda não teve interações. Aguarde até que pelo menos um usuário clique para conversar.');
+      return;
+    }
+
+    if (!confirm('Marcar este anúncio como vendido?')) {
+      return;
+    }
+
+    setIsMarkingSold(true);
+    try {
+      await base44.entities.Ad.update(ad.id, {
+        status: 'sold'
+      });
+      toast.success('Anúncio marcado como vendido!');
+      queryClient.invalidateQueries(['ad', adId]);
+    } catch (error) {
+      toast.error('Erro ao marcar como vendido');
+    } finally {
+      setIsMarkingSold(false);
+    }
   };
 
   if (adLoading) {
@@ -370,13 +444,23 @@ export default function AdDetails() {
               </div>
 
               {/* Boost Timer */}
-              {ad.is_boosted && getTimeRemaining() && (
+              {ad.is_boosted && timeRemaining && (
                 <div className="mt-4 p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
                   <div className="flex items-center gap-2 text-amber-700">
                     <Clock className="w-4 h-4" />
                     <span className="text-sm font-medium">
-                      Destaque expira em: <strong>{getTimeRemaining()}</strong>
+                      Destaque expira em: <strong>{timeRemaining}</strong>
                     </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Sold Badge */}
+              {ad.status === 'sold' && (
+                <div className="mt-4 p-3 bg-green-50 rounded-xl border border-green-200">
+                  <div className="flex items-center gap-2 text-green-700">
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span className="text-sm font-medium">Este produto foi vendido</span>
                   </div>
                 </div>
               )}
@@ -394,9 +478,12 @@ export default function AdDetails() {
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">Ações do Anúncio</h2>
                 <div className="flex flex-wrap gap-3">
                   <Link to={createPageUrl(`EditAd?id=${ad.id}`)}>
-                    <Button variant="outline">Editar Anúncio</Button>
+                    <Button variant="outline">
+                      <Edit2 className="w-4 h-4 mr-2" />
+                      Editar Anúncio
+                    </Button>
                   </Link>
-                  {!ad.is_boosted && (
+                  {!ad.is_boosted && ad.status !== 'sold' && (
                     <Link to={createPageUrl(`TopUp?id=${ad.id}`)}>
                       <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white">
                         <Zap className="w-4 h-4 mr-2" />
@@ -404,7 +491,40 @@ export default function AdDetails() {
                       </Button>
                     </Link>
                   )}
+                  {ad.status !== 'sold' && (
+                    <Button 
+                      variant="outline"
+                      onClick={handleMarkAsSold}
+                      disabled={isMarkingSold || (ad.chat_clicks || 0) === 0}
+                      className="border-green-500 text-green-600 hover:bg-green-50"
+                    >
+                      {isMarkingSold ? (
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      ) : (
+                        <CheckCircle2 className="w-4 h-4 mr-2" />
+                      )}
+                      Marcar como Vendido
+                    </Button>
+                  )}
+                  <Button 
+                    variant="outline"
+                    onClick={handleDelete}
+                    disabled={isDeleting}
+                    className="border-red-500 text-red-600 hover:bg-red-50"
+                  >
+                    {isDeleting ? (
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    ) : (
+                      <Trash2 className="w-4 h-4 mr-2" />
+                    )}
+                    Excluir Anúncio
+                  </Button>
                 </div>
+                {(ad.chat_clicks || 0) === 0 && ad.status !== 'sold' && (
+                  <p className="text-xs text-slate-500 mt-3">
+                    * Para marcar como vendido, é necessário que pelo menos um usuário tenha clicado para conversar.
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -454,8 +574,16 @@ export default function AdDetails() {
 
               <Separator className="my-4" />
 
-              <button className="flex items-center gap-2 text-sm text-slate-500 hover:text-red-500 transition-colors">
-                <Flag className="w-4 h-4" />
+              <button 
+                onClick={handleReport}
+                disabled={isReporting || !user}
+                className="flex items-center gap-2 text-sm text-slate-500 hover:text-red-500 transition-colors disabled:opacity-50"
+              >
+                {isReporting ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Flag className="w-4 h-4" />
+                )}
                 Denunciar anúncio
               </button>
             </div>
@@ -471,7 +599,7 @@ export default function AdDetails() {
       </div>
 
       {/* Mobile Fixed CTA */}
-      {!isOwner && (
+      {!isOwner && ad.status !== 'sold' && (
         <div className="md:hidden fixed bottom-16 left-0 right-0 p-4 bg-white border-t border-slate-200">
           <div className="flex items-center justify-between gap-4">
             <div>
