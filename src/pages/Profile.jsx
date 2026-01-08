@@ -118,6 +118,7 @@ export default function Profile() {
   }
 
   const activeAds = myAds.filter(ad => ad.status === 'active');
+  const soldAds = myAds.filter(ad => ad.status === 'sold');
 
   return (
     <div className="min-h-screen bg-slate-50 pb-24 md:pb-8">
@@ -268,7 +269,7 @@ export default function Profile() {
             <p className="text-sm text-slate-500">Anúncios</p>
           </div>
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
-            <p className="text-2xl font-bold text-indigo-600">{user.total_sales || 0}</p>
+            <p className="text-2xl font-bold text-indigo-600">{soldAds.length}</p>
             <p className="text-sm text-slate-500">Vendas</p>
           </div>
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
