@@ -5,9 +5,6 @@ import { MapPin, Eye, Zap, Clock, Heart } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import moment from 'moment';
-import 'moment/locale/pt-br';
-
-moment.locale('pt-br');
 
 export default function AdCard({ ad, onFavorite, isFavorited, showBoostTimer = true }) {
   const isExpiringSoon = ad.is_boosted && ad.boost_expires_at && 
