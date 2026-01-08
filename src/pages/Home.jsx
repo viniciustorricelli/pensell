@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Loader2, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Loader2, RefreshCw, ChevronLeft, ChevronRight, Search, MapPin } from 'lucide-react';
 import AdCard from '@/components/ads/AdCard';
 import BoostedAdsCarousel from '@/components/ads/BoostedAdsCarousel';
 import CategoryFilter from '@/components/ads/CategoryFilter';
+import CommunitySelector from '@/components/CommunitySelector';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import moment from 'moment';
 
 export default function Home() {
   const [user, setUser] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
   const [allAds, setAllAds] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -52,7 +55,7 @@ export default function Home() {
 
   // Fetch regular ads with pagination
   const { data: regularAds = [], isLoading, isFetching } = useQuery({
-    queryKey: ['ads', selectedCategory, page, user?.current_community_id],
+    queryKey: ['ads', selectedCategory, page, user?.current_community_id, searchQuery],
     queryFn: async () => {
       const filter = { status: 'active' };
       if (selectedCategory) {
@@ -63,7 +66,17 @@ export default function Home() {
       }
       
       // Fetch more ads than needed to handle pagination
-      const allAds = await base44.entities.Ad.filter(filter, '-created_date', 100);
+      let allAds = await base44.entities.Ad.filter(filter, '-created_date', 100);
+      
+      // Filter by search query if provided
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        allAds = allAds.filter(ad => 
+          ad.title.toLowerCase().includes(query) || 
+          ad.description.toLowerCase().includes(query)
+        );
+      }
+      
       const skip = (page - 1) * 10;
       return allAds.slice(skip, skip + 10);
     }
@@ -76,10 +89,10 @@ export default function Home() {
     setHasMore(regularAds.length === 10);
   }, [regularAds, page]);
 
-  // Reset when category changes
+  // Reset when category or search changes
   useEffect(() => {
     setPage(1);
-  }, [selectedCategory]);
+  }, [selectedCategory, searchQuery]);
 
   // Fetch favorites
   const { data: favorites = [] } = useQuery({
@@ -133,15 +146,44 @@ export default function Home() {
     }
   };
 
+  const handleCommunityChange = () => {
+    const loadUser = async () => {
+      const userData = await base44.auth.me();
+      setUser(userData);
+    };
+    loadUser();
+  };
+
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto">
+        {/* Community Selector */}
+        {user && user.current_community_id && (
+          <div className="pt-4 pb-2 px-4 bg-slate-50">
+            <CommunitySelector user={user} onCommunityChange={handleCommunityChange} />
+          </div>
+        )}
+
         {/* Category Filter */}
         <div className="py-4 bg-slate-50 sticky top-14 md:top-16 z-30 border-b border-slate-100">
           <CategoryFilter 
             selected={selectedCategory} 
             onChange={setSelectedCategory} 
           />
+        </div>
+
+        {/* Search Bar */}
+        <div className="px-4 pt-4">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <Input
+              type="text"
+              placeholder="Buscar anúncios..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-12 pl-12 bg-white rounded-xl"
+            />
+          </div>
         </div>
 
         {/* Boosted Ads Carousel */}
