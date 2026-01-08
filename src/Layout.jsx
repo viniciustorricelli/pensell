@@ -160,29 +160,13 @@ export default function Layout({ children, currentPageName }) {
               }
               
               <Link to={createPageUrl('Home')} className="flex items-center gap-2">
-                <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">M</span>
-                </div>
-                <span className="text-xl font-bold text-slate-800">Mercado<span className="text-indigo-600">Local</span></span>
+                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/58b386504_1-removebg-preview.png" alt="PenSell" className="h-8" />
               </Link>
             </div>
 
-            {/* Community Selector & Search */}
-            <div className="flex-1 max-w-xl mx-8 flex items-center gap-4">
-              {isAuthenticated && user && user.current_community_id &&
-              <CommunitySelector
-                user={user}
-                onCommunityChange={() => {
-                  setUser(null);
-                  const loadUser = async () => {
-                    const userData = await base44.auth.me();
-                    setUser(userData);
-                  };
-                  loadUser();
-                }} />
-
-              }
-              <Link to={createPageUrl('Search')} className="flex-1">
+            {/* Search */}
+            <div className="flex-1 max-w-xl mx-8">
+              <Link to={createPageUrl('Search')} className="block">
                 <div className="flex items-center bg-slate-100 rounded-full px-4 py-2.5 hover:bg-slate-200 transition-colors cursor-pointer">
                   <Search className="w-5 h-5 text-slate-400" />
                   <span className="ml-3 text-slate-500">Buscar...</span>
@@ -193,7 +177,7 @@ export default function Layout({ children, currentPageName }) {
             {/* Nav Items */}
             <div className="flex items-center gap-2">
               <Link to={createPageUrl('CreateAd')}>
-                <Button className="bg-indigo-600 hover:bg-indigo-700 rounded-full">
+                <Button className="bg-blue-600 hover:bg-blue-700 rounded-full">
                   <PlusCircle className="w-4 h-4 mr-2" />
                   Anunciar
                 </Button>
@@ -207,8 +191,8 @@ export default function Layout({ children, currentPageName }) {
                         {user?.profile_photo ?
                       <img src={user.profile_photo} alt="" className="w-8 h-8 rounded-full object-cover" /> :
 
-                      <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
-                            <User className="w-4 h-4 text-indigo-600" />
+                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                            <User className="w-4 h-4 text-blue-600" />
                           </div>
                       }
                         <ChevronDown className="w-4 h-4 text-slate-400" />
@@ -299,34 +283,17 @@ export default function Layout({ children, currentPageName }) {
             }
             
             <Link to={createPageUrl('Home')} className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">M</span>
-              </div>
-              <span className="font-bold text-slate-800">PenSell
-              </span>
+              <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/58b386504_1-removebg-preview.png" alt="PenSell" className="h-6" />
             </Link>
           </div>
 
           <div className="flex items-center gap-2">
-            {isAuthenticated && user && user.current_community_id && <CommunitySelector
-              user={user}
-              onCommunityChange={() => {
-                setUser(null);
-                const loadUser = async () => {
-                  const userData = await base44.auth.me();
-                  setUser(userData);
-                };
-                loadUser();
-              }} />
-
-            }
             {!isAuthenticated &&
             <Button
               size="sm"
               variant="outline"
               onClick={() => base44.auth.redirectToLogin()}
               className="rounded-full text-sm">
-
                 Entrar
               </Button>
             }
@@ -353,7 +320,7 @@ export default function Layout({ children, currentPageName }) {
                   to={createPageUrl(item.page)}
                   className="flex items-center justify-center -mt-4">
 
-                  <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                  <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
                     <Icon className="w-6 h-6 text-white" />
                   </div>
                 </Link>);
@@ -366,7 +333,7 @@ export default function Layout({ children, currentPageName }) {
                 to={createPageUrl(item.page)}
                 className={cn(
                   "flex flex-col items-center justify-center gap-1 flex-1 py-2 relative",
-                  isActive ? "text-indigo-600" : "text-slate-500"
+                  isActive ? "text-blue-600" : "text-slate-500"
                 )}>
 
                 <div className="relative">
@@ -387,7 +354,7 @@ export default function Layout({ children, currentPageName }) {
             to={createPageUrl('Profile')}
             className={cn(
               "flex flex-col items-center justify-center gap-1 flex-1 py-2",
-              currentPageName === 'Profile' ? "text-indigo-600" : "text-slate-500"
+              currentPageName === 'Profile' ? "text-blue-600" : "text-slate-500"
             )}>
 
               <User className="w-5 h-5" />

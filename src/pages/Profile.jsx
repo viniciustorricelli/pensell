@@ -66,16 +66,7 @@ export default function Profile() {
     enabled: !!user
   });
 
-  // Fetch user's reviews
-  const { data: reviews = [] } = useQuery({
-    queryKey: ['my-reviews', user?.id],
-    queryFn: () => base44.entities.Review.filter({ seller_id: user.id }),
-    enabled: !!user
-  });
 
-  const averageRating = reviews.length > 0
-    ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
-    : 0;
 
   const handlePhotoUpload = async (e) => {
     const file = e.target.files[0];
@@ -162,17 +153,7 @@ export default function Profile() {
                 </div>
               )}
 
-              {reviews.length > 0 && (
-                <div className="flex items-center gap-1.5 mt-2">
-                  <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                  <span className="text-sm font-medium text-slate-800">
-                    {averageRating.toFixed(1)}
-                  </span>
-                  <span className="text-sm text-slate-500">
-                    ({reviews.length} avaliações)
-                  </span>
-                </div>
-              )}
+
             </div>
 
             <Button
@@ -263,18 +244,14 @@ export default function Profile() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
-            <p className="text-2xl font-bold text-indigo-600">{myAds.length}</p>
+            <p className="text-2xl font-bold text-blue-600">{myAds.length}</p>
             <p className="text-sm text-slate-500">Anúncios</p>
           </div>
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
-            <p className="text-2xl font-bold text-indigo-600">{soldAds.length}</p>
+            <p className="text-2xl font-bold text-blue-600">{soldAds.length}</p>
             <p className="text-sm text-slate-500">Vendas</p>
-          </div>
-          <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
-            <p className="text-2xl font-bold text-indigo-600">{reviews.length}</p>
-            <p className="text-sm text-slate-500">Avaliações</p>
           </div>
         </div>
 
