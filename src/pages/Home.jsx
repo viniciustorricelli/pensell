@@ -183,31 +183,31 @@ export default function Home() {
           <>
             {/* Search Bar */}
             <div className="px-4 pt-4">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-            <Input
-              type="text"
-              placeholder="Buscar anúncios..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-12 pl-12 bg-white rounded-xl"
-            />
-          </div>
-        </div>
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                <Input
+                  type="text"
+                  placeholder="Buscar anúncios..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="h-12 pl-12 bg-white rounded-xl"
+                />
+              </div>
+            </div>
 
-        {/* Boosted Ads Carousel */}
-        {boostedAds.length > 0 && !selectedCategory && (
-          <div className="py-6">
-            <BoostedAdsCarousel 
-              ads={boostedAds} 
-              onFavorite={handleFavorite}
-              favorites={favorites}
-            />
-          </div>
-        )}
+            {/* Boosted Ads Carousel */}
+            {boostedAds.length > 0 && !selectedCategory && (
+              <div className="py-6">
+                <BoostedAdsCarousel 
+                  ads={boostedAds} 
+                  onFavorite={handleFavorite}
+                  favorites={favorites}
+                />
+              </div>
+            )}
 
-        {/* Main Feed */}
-        <div className="px-4 md:px-0 py-6">
+            {/* Main Feed */}
+            <div className="px-4 md:px-0 py-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-slate-800">
               {selectedCategory ? 'Resultados' : 'Anúncios Recentes'}
