@@ -16,8 +16,8 @@ import {
   Bell,
   LogOut,
   Settings,
-  ChevronDown
-} from 'lucide-react';
+  ChevronDown } from
+'lucide-react';
 import CommunitySelector from '@/components/CommunitySelector';
 import { Button } from '@/components/ui/button';
 import {
@@ -25,8 +25,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+  DropdownMenuTrigger } from
+'@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
@@ -42,13 +42,13 @@ export default function Layout({ children, currentPageName }) {
         setIsAuthenticated(authenticated);
         if (authenticated) {
           let userData = await base44.auth.me();
-          
+
           // Auto-reset topups if 24h have passed
           if (userData.last_topup_reset && userData.available_topups === 0) {
             const lastReset = new Date(userData.last_topup_reset);
             const now = new Date();
             const hoursSinceReset = (now - lastReset) / (1000 * 60 * 60);
-            
+
             if (hoursSinceReset >= 24) {
               await base44.auth.updateMe({
                 available_topups: 1,
@@ -57,13 +57,13 @@ export default function Layout({ children, currentPageName }) {
               userData = await base44.auth.me();
             }
           }
-          
+
           // Redirect to community selection if user doesn't have one (except on SelectCommunity page)
           if (!userData.current_community_id && currentPageName !== 'SelectCommunity') {
             window.location.href = createPageUrl('SelectCommunity');
             return;
           }
-          
+
           setUser(userData);
         }
       } catch (e) {
@@ -80,9 +80,9 @@ export default function Layout({ children, currentPageName }) {
       const convos = await base44.entities.Conversation.filter({
         $or: [{ buyer_id: user.id }, { seller_id: user.id }]
       });
-      return convos.filter(c => 
-        (c.buyer_id === user.id && c.unread_buyer > 0) ||
-        (c.seller_id === user.id && c.unread_seller > 0)
+      return convos.filter((c) =>
+      c.buyer_id === user.id && c.unread_buyer > 0 ||
+      c.seller_id === user.id && c.unread_seller > 0
       );
     },
     enabled: !!user,
@@ -92,9 +92,9 @@ export default function Layout({ children, currentPageName }) {
   const unreadCount = unreadConversations.length;
 
   const navItems = [
-    { name: 'Home', icon: Home, page: 'Home' },
-    { name: 'Anunciar', icon: PlusCircle, page: 'CreateAd', highlight: true },
-  ];
+  { name: 'Home', icon: Home, page: 'Home' },
+  { name: 'Anunciar', icon: PlusCircle, page: 'CreateAd', highlight: true }];
+
 
   const handleLogout = () => {
     base44.auth.logout();
@@ -118,16 +118,16 @@ export default function Layout({ children, currentPageName }) {
           <div className="flex items-center justify-between h-16">
             {/* Left: Menu + Logo */}
             <div className="flex items-center gap-3">
-              {isAuthenticated && (
-                <DropdownMenu>
+              {isAuthenticated &&
+              <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="icon" className="rounded-full relative h-10 w-10">
                       <Menu className="w-6 h-6" />
-                      {unreadCount > 0 && (
-                        <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
+                      {unreadCount > 0 &&
+                    <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
                           {unreadCount}
                         </Badge>
-                      )}
+                    }
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start" className="w-56">
@@ -135,11 +135,11 @@ export default function Layout({ children, currentPageName }) {
                       <Link to={createPageUrl('Messages')} className="flex items-center gap-2 cursor-pointer">
                         <MessageCircle className="w-4 h-4" />
                         Mensagens
-                        {unreadCount > 0 && (
-                          <Badge className="ml-auto h-5 w-5 flex items-center justify-center p-0 bg-red-500">
+                        {unreadCount > 0 &&
+                      <Badge className="ml-auto h-5 w-5 flex items-center justify-center p-0 bg-red-500">
                             {unreadCount}
                           </Badge>
-                        )}
+                      }
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
@@ -157,7 +157,7 @@ export default function Layout({ children, currentPageName }) {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              )}
+              }
               
               <Link to={createPageUrl('Home')} className="flex items-center gap-2">
                 <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
@@ -169,19 +169,19 @@ export default function Layout({ children, currentPageName }) {
 
             {/* Community Selector & Search */}
             <div className="flex-1 max-w-xl mx-8 flex items-center gap-4">
-              {isAuthenticated && user && user.current_community_id && (
-                <CommunitySelector 
-                  user={user} 
-                  onCommunityChange={() => {
-                    setUser(null);
-                    const loadUser = async () => {
-                      const userData = await base44.auth.me();
-                      setUser(userData);
-                    };
-                    loadUser();
-                  }}
-                />
-              )}
+              {isAuthenticated && user && user.current_community_id &&
+              <CommunitySelector
+                user={user}
+                onCommunityChange={() => {
+                  setUser(null);
+                  const loadUser = async () => {
+                    const userData = await base44.auth.me();
+                    setUser(userData);
+                  };
+                  loadUser();
+                }} />
+
+              }
               <Link to={createPageUrl('Search')} className="flex-1">
                 <div className="flex items-center bg-slate-100 rounded-full px-4 py-2.5 hover:bg-slate-200 transition-colors cursor-pointer">
                   <Search className="w-5 h-5 text-slate-400" />
@@ -199,18 +199,18 @@ export default function Layout({ children, currentPageName }) {
                 </Button>
               </Link>
 
-              {isAuthenticated ? (
-                <>
+              {isAuthenticated ?
+              <>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <button className="flex items-center gap-2 p-1.5 hover:bg-slate-100 rounded-full transition-colors">
-                        {user?.profile_photo ? (
-                          <img src={user.profile_photo} alt="" className="w-8 h-8 rounded-full object-cover" />
-                        ) : (
-                          <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
+                        {user?.profile_photo ?
+                      <img src={user.profile_photo} alt="" className="w-8 h-8 rounded-full object-cover" /> :
+
+                      <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
                             <User className="w-4 h-4 text-indigo-600" />
                           </div>
-                        )}
+                      }
                         <ChevronDown className="w-4 h-4 text-slate-400" />
                       </button>
                     </DropdownMenuTrigger>
@@ -238,16 +238,16 @@ export default function Layout({ children, currentPageName }) {
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                </>
-              ) : (
-                <Button 
-                  variant="outline" 
-                  onClick={() => base44.auth.redirectToLogin()}
-                  className="rounded-full"
-                >
+                </> :
+
+              <Button
+                variant="outline"
+                onClick={() => base44.auth.redirectToLogin()}
+                className="rounded-full">
+
                   Entrar
                 </Button>
-              )}
+              }
             </div>
           </div>
         </div>
@@ -257,16 +257,16 @@ export default function Layout({ children, currentPageName }) {
       <header className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-slate-200 z-50">
         <div className="flex items-center justify-between px-4 h-14 py-2">
           <div className="flex items-center gap-2">
-            {isAuthenticated && (
-              <DropdownMenu>
+            {isAuthenticated &&
+            <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="h-10 w-10 relative p-2">
                     <Menu className="w-6 h-6" />
-                    {unreadCount > 0 && (
-                      <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
+                    {unreadCount > 0 &&
+                  <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
                         {unreadCount}
                       </Badge>
-                    )}
+                  }
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-56">
@@ -274,11 +274,11 @@ export default function Layout({ children, currentPageName }) {
                     <Link to={createPageUrl('Messages')} className="flex items-center gap-2 cursor-pointer">
                       <MessageCircle className="w-4 h-4" />
                       Mensagens
-                      {unreadCount > 0 && (
-                        <Badge className="ml-auto h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-xs">
+                      {unreadCount > 0 &&
+                    <Badge className="ml-auto h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-xs">
                           {unreadCount}
                         </Badge>
-                      )}
+                    }
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
@@ -296,40 +296,40 @@ export default function Layout({ children, currentPageName }) {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-            )}
+            }
             
             <Link to={createPageUrl('Home')} className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold">M</span>
               </div>
-              <span className="font-bold text-slate-800">Mercado<span className="text-indigo-600">Local</span></span>
+              <span className="font-bold text-slate-800">PenSell
+              </span>
             </Link>
           </div>
 
           <div className="flex items-center gap-2">
-            {isAuthenticated && user && user.current_community_id && (
-              <CommunitySelector 
-                user={user} 
-                onCommunityChange={() => {
-                  setUser(null);
-                  const loadUser = async () => {
-                    const userData = await base44.auth.me();
-                    setUser(userData);
-                  };
-                  loadUser();
-                }}
-              />
-            )}
-            {!isAuthenticated && (
-              <Button 
-                size="sm"
-                variant="outline" 
-                onClick={() => base44.auth.redirectToLogin()}
-                className="rounded-full text-sm"
-              >
+            {isAuthenticated && user && user.current_community_id && <CommunitySelector
+              user={user}
+              onCommunityChange={() => {
+                setUser(null);
+                const loadUser = async () => {
+                  const userData = await base44.auth.me();
+                  setUser(userData);
+                };
+                loadUser();
+              }} />
+
+            }
+            {!isAuthenticated &&
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => base44.auth.redirectToLogin()}
+              className="rounded-full text-sm">
+
                 Entrar
               </Button>
-            )}
+            }
           </div>
         </div>
       </header>
@@ -345,19 +345,19 @@ export default function Layout({ children, currentPageName }) {
           {navItems.map((item) => {
             const isActive = currentPageName === item.page;
             const Icon = item.icon;
-            
+
             if (item.highlight) {
               return (
                 <Link
                   key={item.page}
                   to={createPageUrl(item.page)}
-                  className="flex items-center justify-center -mt-4"
-                >
+                  className="flex items-center justify-center -mt-4">
+
                   <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg shadow-indigo-500/30">
                     <Icon className="w-6 h-6 text-white" />
                   </div>
-                </Link>
-              );
+                </Link>);
+
             }
 
             return (
@@ -367,43 +367,43 @@ export default function Layout({ children, currentPageName }) {
                 className={cn(
                   "flex flex-col items-center justify-center gap-1 flex-1 py-2 relative",
                   isActive ? "text-indigo-600" : "text-slate-500"
-                )}
-              >
+                )}>
+
                 <div className="relative">
                   <Icon className="w-5 h-5" />
-                  {item.badge > 0 && (
-                    <Badge className="absolute -top-2 -right-2 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
+                  {item.badge > 0 &&
+                  <Badge className="absolute -top-2 -right-2 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
                       {item.badge}
                     </Badge>
-                  )}
+                  }
                 </div>
                 <span className="text-xs font-medium">{item.name}</span>
-              </Link>
-            );
+              </Link>);
+
           })}
           
-          {isAuthenticated ? (
-            <Link
-              to={createPageUrl('Profile')}
-              className={cn(
-                "flex flex-col items-center justify-center gap-1 flex-1 py-2",
-                currentPageName === 'Profile' ? "text-indigo-600" : "text-slate-500"
-              )}
-            >
+          {isAuthenticated ?
+          <Link
+            to={createPageUrl('Profile')}
+            className={cn(
+              "flex flex-col items-center justify-center gap-1 flex-1 py-2",
+              currentPageName === 'Profile' ? "text-indigo-600" : "text-slate-500"
+            )}>
+
               <User className="w-5 h-5" />
               <span className="text-xs font-medium">Perfil</span>
-            </Link>
-          ) : (
-            <button
-              onClick={() => base44.auth.redirectToLogin()}
-              className="flex flex-col items-center justify-center gap-1 flex-1 py-2 text-slate-500"
-            >
+            </Link> :
+
+          <button
+            onClick={() => base44.auth.redirectToLogin()}
+            className="flex flex-col items-center justify-center gap-1 flex-1 py-2 text-slate-500">
+
               <User className="w-5 h-5" />
               <span className="text-xs font-medium">Entrar</span>
             </button>
-          )}
+          }
         </div>
       </nav>
-    </div>
-  );
+    </div>);
+
 }
