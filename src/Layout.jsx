@@ -58,6 +58,12 @@ export default function Layout({ children, currentPageName }) {
             }
           }
           
+          // Redirect to community selection if user doesn't have one (except on SelectCommunity page)
+          if (!userData.current_community_id && currentPageName !== 'SelectCommunity') {
+            window.location.href = createPageUrl('SelectCommunity');
+            return;
+          }
+          
           setUser(userData);
         }
       } catch (e) {
@@ -65,7 +71,7 @@ export default function Layout({ children, currentPageName }) {
       }
     };
     checkAuth();
-  }, []);
+  }, [currentPageName]);
 
   const { data: unreadConversations = [] } = useQuery({
     queryKey: ['unread-conversations', user?.id],

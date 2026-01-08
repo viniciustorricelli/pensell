@@ -18,7 +18,7 @@ export default function SelectCommunity() {
       try {
         const authenticated = await base44.auth.isAuthenticated();
         if (!authenticated) {
-          window.location.href = createPageUrl('Register');
+          base44.auth.redirectToLogin(window.location.href);
           return;
         }
         const userData = await base44.auth.me();
@@ -31,7 +31,7 @@ export default function SelectCommunity() {
         
         setUser(userData);
       } catch (e) {
-        window.location.href = createPageUrl('Register');
+        base44.auth.redirectToLogin(window.location.href);
       }
     };
     checkAuth();
@@ -148,10 +148,8 @@ export default function SelectCommunity() {
 
           {/* Footer */}
           <div className="text-center mt-6">
-            <p className="text-gray-600 text-sm mb-2">Não encontrou sua instituição?</p>
-            <button className="text-blue-600 font-semibold hover:underline">
-              clique aqui
-            </button>
+            <p className="text-gray-600 text-sm">Não encontrou sua instituição?</p>
+            <p className="text-gray-500 text-xs mt-1">Entre em contato com o suporte</p>
           </div>
         </div>
       </div>
