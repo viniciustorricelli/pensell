@@ -12,22 +12,37 @@ export function Toaster() {
   const { toasts } = useToast();
 
   return (
-    <ToastProvider>
-      {toasts.map(function ({ id, title, description, action, ...props }) {
-        return (
-          <Toast key={id} {...props}>
-            <div className="grid gap-1">
-              {title && <ToastTitle>{title}</ToastTitle>}
-              {description && (
-                <ToastDescription>{description}</ToastDescription>
-              )}
-            </div>
-            {action}
-            <ToastClose />
-          </Toast>
-        );
-      })}
-      <ToastViewport />
-    </ToastProvider>
+    <>
+      <style>{`
+        @media (max-width: 640px) {
+          [data-sonner-toaster] {
+            max-width: calc(100vw - 2rem) !important;
+            left: 1rem !important;
+            right: 1rem !important;
+          }
+          [data-sonner-toast] {
+            padding: 0.75rem !important;
+            font-size: 0.875rem !important;
+          }
+        }
+      `}</style>
+      <ToastProvider>
+        {toasts.map(function ({ id, title, description, action, ...props }) {
+          return (
+            <Toast key={id} {...props}>
+              <div className="grid gap-1">
+                {title && <ToastTitle>{title}</ToastTitle>}
+                {description && (
+                  <ToastDescription>{description}</ToastDescription>
+                )}
+              </div>
+              {action}
+              <ToastClose />
+            </Toast>
+          );
+        })}
+        <ToastViewport />
+      </ToastProvider>
+    </>
   );
 }
