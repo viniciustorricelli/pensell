@@ -203,14 +203,14 @@ export default function Home() {
             <div className="flex items-center justify-center py-20">
               <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
             </div>
-          ) : allAds.length === 0 ? (
+          ) : regularAds.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-slate-500">Nenhum anúncio encontrado</p>
             </div>
           ) : (
             <>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {allAds.map((ad) => (
+                {regularAds.map((ad) => (
                   <AdCard 
                     key={ad.id}
                     ad={ad}
