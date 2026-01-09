@@ -41,7 +41,7 @@ export default function AdCard({ ad, onFavorite, isFavorited, showBoostTimer = t
         "bg-white rounded-2xl overflow-hidden transition-all duration-300",
         "hover:shadow-xl hover:-translate-y-1",
         "border",
-        ad.is_boosted ? "border-amber-200 bg-amber-50/30" : "border-slate-100"
+        ad.is_boosted && ad.boost_expires_at && moment(ad.boost_expires_at).isAfter(moment()) ? "border-amber-200 bg-amber-50/30" : "border-slate-100"
       )}>
         {/* Image Container */}
         <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
@@ -58,11 +58,10 @@ export default function AdCard({ ad, onFavorite, isFavorited, showBoostTimer = t
           )}
           
           {/* Boost Badge */}
-          {ad.is_boosted && (
+          {ad.is_boosted && ad.boost_expires_at && moment(ad.boost_expires_at).isAfter(moment()) && (
             <div className="absolute top-3 left-3">
-              <Badge className="bg-amber-100 text-amber-700 border border-amber-200 text-xs font-medium">
-                <Zap className="w-3 h-3 mr-1" />
-                Destaque
+              <Badge className="bg-amber-100 text-amber-700 border border-amber-200 px-2 py-1">
+                <Zap className="w-4 h-4" />
               </Badge>
             </div>
           )}
@@ -88,7 +87,7 @@ export default function AdCard({ ad, onFavorite, isFavorited, showBoostTimer = t
           )}
 
           {/* Boost Timer */}
-          {showBoostTimer && ad.is_boosted && getTimeRemaining() && (
+          {showBoostTimer && ad.is_boosted && ad.boost_expires_at && moment(ad.boost_expires_at).isAfter(moment()) && getTimeRemaining() && (
             <div className={cn(
               "absolute bottom-3 left-3 right-3",
               "bg-black/60 backdrop-blur-sm rounded-lg px-3 py-1.5",
