@@ -35,6 +35,7 @@ export default function Layout({ children, currentPageName }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -69,10 +70,26 @@ export default function Layout({ children, currentPageName }) {
         }
       } catch (e) {
         setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
       }
     };
     checkAuth();
   }, [currentPageName]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="text-center">
+          <img 
+            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" 
+            alt="PenSell" 
+            className="h-12 mx-auto mb-4 animate-pulse"
+          />
+        </div>
+      </div>
+    );
+  }
 
   const { data: unreadConversations = [] } = useQuery({
     queryKey: ['unread-conversations', user?.id],
