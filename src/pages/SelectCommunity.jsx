@@ -106,7 +106,7 @@ export default function SelectCommunity() {
           </div>
 
           {/* Communities List */}
-          <div className="space-y-2 mb-6 max-h-80 overflow-y-auto">
+          <div className="space-y-2 mb-3 max-h-80 overflow-y-auto">
             {filteredCommunities.length === 0 ? (
               <p className="text-center text-gray-500 py-8">Nenhuma instituição encontrada</p>
             ) : (
