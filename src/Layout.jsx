@@ -267,8 +267,8 @@ export default function Layout({ children, currentPageName }) {
 
       {/* Mobile Header */}
       <header className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-slate-200 z-40">
-        <div className="flex items-center justify-between px-4 h-14">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-center h-14 px-4 relative">
+          <div className="absolute left-0">
             {isAuthenticated &&
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -309,13 +309,13 @@ export default function Layout({ children, currentPageName }) {
                 </DropdownMenuContent>
               </DropdownMenu>
             }
-            
-            <Link to={createPageUrl('Home')} className="flex flex-1 items-center justify-center">
-              <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" alt="PenSell" className="h-10" />
-            </Link>
           </div>
 
-          <div className="flex items-center gap-2">
+          <Link to={createPageUrl('Home')} className="flex items-center justify-center">
+            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" alt="PenSell" className="h-10" />
+          </Link>
+
+          <div className="absolute right-0">
             {!isAuthenticated &&
             <Button
               size="sm"
