@@ -158,6 +158,17 @@ export default function SelectCommunity() {
           </div>
       </div>
 
+      {/* Footer Button */}
+      <div className="text-center mt-4">
+        <Button
+          variant="link"
+          onClick={() => setShowRequestDialog(true)}
+          className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+        >
+          Não encontrou? Solicitar nova comunidade
+        </Button>
+      </div>
+
       {/* Request Community Dialog */}
       <RequestCommunityDialog 
         open={showRequestDialog}
