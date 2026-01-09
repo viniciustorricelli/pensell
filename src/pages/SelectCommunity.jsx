@@ -76,10 +76,20 @@ export default function SelectCommunity() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600">
         <Loader2 className="w-8 h-8 animate-spin text-white" />
       </div>
-    );
-  }
+      </>
+      );
+      }
 
   return (
+    <>
+    <style>{`
+      [data-sonner-toaster] {
+        top: 1rem !important;
+      }
+      [data-sonner-toast] {
+        margin-top: 0 !important;
+      }
+    `}</style>
     <div className="min-h-screen bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-3xl p-8 shadow-2xl">
