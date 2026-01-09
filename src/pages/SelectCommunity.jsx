@@ -136,7 +136,7 @@ export default function SelectCommunity() {
 
           {/* Selected Community Display */}
           {selectedCommunity && (
-            <div className="bg-gray-50 rounded-xl p-4 mb-4 text-center">
+            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-center">
               <p className="text-sm text-gray-600 mb-1">Instituição selecionada:</p>
               <p className="font-semibold text-gray-800">{selectedCommunity.name}</p>
             </div>
