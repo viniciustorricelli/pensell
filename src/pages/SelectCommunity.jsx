@@ -76,9 +76,8 @@ export default function SelectCommunity() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600">
         <Loader2 className="w-8 h-8 animate-spin text-white" />
       </div>
-      </>
-      );
-      }
+    );
+  }
 
   return (
     <>
@@ -176,14 +175,14 @@ export default function SelectCommunity() {
               Solicitar nova comunidade
             </Button>
           </div>
-          </div>
-          </div>
+        </div>
+      </div>
 
-          {/* Request Community Dialog */}
-          <RequestCommunityDialog 
-          open={showRequestDialog}
-          onOpenChange={setShowRequestDialog}
-          />
-          </div>
-          );
-          }
+      {/* Request Community Dialog */}
+      <RequestCommunityDialog 
+        open={showRequestDialog}
+        onOpenChange={setShowRequestDialog}
+      />
+    </>
+  );
+}
