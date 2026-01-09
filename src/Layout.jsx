@@ -20,6 +20,7 @@ import {
 'lucide-react';
 import CommunitySelector from '@/components/CommunitySelector';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   DropdownMenu,
   DropdownMenuContent,
