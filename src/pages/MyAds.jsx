@@ -113,6 +113,7 @@ export default function MyAds() {
   const activeAds = myAds.filter(ad => ad.status === 'active');
   const pausedAds = myAds.filter(ad => ad.status === 'paused');
   const soldAds = myAds.filter(ad => ad.status === 'sold');
+  const pendingAds = myAds.filter(ad => ad.status === 'pending_activation');
 
   if (!user) {
     return (
@@ -141,11 +142,18 @@ export default function MyAds() {
         {/* Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
-            <Link to={createPageUrl(`AdDetails?id=${ad.id}`)}>
-              <h3 className="font-semibold text-slate-800 truncate hover:text-indigo-600 transition-colors">
-                {ad.title}
-              </h3>
-            </Link>
+            <div className="flex-1">
+              <Link to={createPageUrl(`AdDetails?id=${ad.id}`)}>
+                <h3 className="font-semibold text-slate-800 truncate hover:text-indigo-600 transition-colors">
+                  {ad.title}
+                </h3>
+              </Link>
+              {ad.status === 'pending_activation' && (
+                <Badge className="bg-orange-100 text-orange-700 mt-1">
+                  Aguardando ativação
+                </Badge>
+              )}
+            </div>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -212,6 +220,17 @@ export default function MyAds() {
             </div>
           )}
 
+          {ad.status === 'pending_activation' && (
+            <Link to={createPageUrl(`TopUp?id=${ad.id}`)}>
+              <Button 
+                size="sm" 
+                className="mt-2 bg-orange-600 hover:bg-orange-700 text-white"
+              >
+                <Zap className="w-3.5 h-3.5 mr-1" />
+                Ativar Anúncio
+              </Button>
+            </Link>
+          )}
           {!ad.is_boosted && ad.status === 'active' && (
             <Link to={createPageUrl(`TopUp?id=${ad.id}`)}>
               <Button 
@@ -269,8 +288,11 @@ export default function MyAds() {
             </Link>
           </div>
         ) : (
-          <Tabs defaultValue="active" className="w-full">
-            <TabsList className="w-full grid grid-cols-3 mb-4">
+          <Tabs defaultValue={pendingAds.length > 0 ? "pending" : "active"} className="w-full">
+            <TabsList className="w-full grid grid-cols-4 mb-4">
+              <TabsTrigger value="pending">
+                Pendentes ({pendingAds.length})
+              </TabsTrigger>
               <TabsTrigger value="active">
                 Ativos ({activeAds.length})
               </TabsTrigger>
@@ -281,6 +303,14 @@ export default function MyAds() {
                 Vendidos ({soldAds.length})
               </TabsTrigger>
             </TabsList>
+
+            <TabsContent value="pending" className="space-y-4">
+              {pendingAds.length === 0 ? (
+                <p className="text-center text-slate-500 py-10">Nenhum anúncio pendente</p>
+              ) : (
+                pendingAds.map(ad => <AdItem key={ad.id} ad={ad} />)
+              )}
+            </TabsContent>
 
             <TabsContent value="active" className="space-y-4">
               {activeAds.length === 0 ? (
