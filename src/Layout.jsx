@@ -399,7 +399,7 @@ export default function Layout({ children, currentPageName }) {
           }
         </div>
         </nav>
-        <Toaster />
+        <Toaster position="top-center" />
         </div>);
 
         }
