@@ -58,7 +58,7 @@ export default function Layout({ children, currentPageName }) {
   const unreadCount = unreadConversations.length;
 
   const navItems = [
-  { name: 'Home', icon: () => <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/e154f2940_Designsemnome1.png" alt="Home" className="w-5 h-5 object-contain" />, page: 'Home' },
+  { name: 'Home', icon: () => <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/e154f2940_Designsemnome1.png" alt="Home" className="w-6 h-6 object-contain" />, page: 'Home' },
   { name: 'Anunciar', icon: PlusCircle, page: 'CreateAd', highlight: true }];
 
 
