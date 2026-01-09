@@ -45,7 +45,8 @@ ${description}
       setDescription('');
       onOpenChange(false);
     } catch (error) {
-      toast.error('Erro ao enviar denúncia');
+      console.error('Erro ao enviar email:', error);
+      toast.error(`Erro ao enviar denúncia: ${error.message || 'Erro desconhecido'}`);
     } finally {
       setIsSending(false);
     }

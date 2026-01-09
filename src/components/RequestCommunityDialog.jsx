@@ -52,7 +52,8 @@ Solicitado por: ${user.full_name} (${user.email})
       setDetails('');
       onOpenChange(false);
     } catch (error) {
-      toast.error('Erro ao enviar solicitação');
+      console.error('Erro ao enviar email:', error);
+      toast.error(`Erro ao enviar solicitação: ${error.message || 'Erro desconhecido'}`);
     } finally {
       setIsSending(false);
     }
