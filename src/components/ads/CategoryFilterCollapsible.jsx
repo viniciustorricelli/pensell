@@ -55,8 +55,8 @@ export default function CategoryFilterCollapsible({ selected, onChange }) {
             className="fixed inset-0 z-40" 
             onClick={() => setIsExpanded(false)}
           />
-          <div className="absolute top-full left-0 mt-2 bg-white rounded-2xl shadow-xl p-4 z-50 w-80 max-w-[calc(100vw-2rem)]">
-            <div className="flex flex-col gap-2">
+          <div className="absolute top-full left-0 mt-2 bg-white rounded-2xl shadow-xl p-4 z-50 w-72 max-w-[calc(100vw-2rem)]">
+            <div className="grid grid-cols-2 gap-2">
               {categories.map((cat) => {
                 const CategoryIcon = cat.icon;
                 const isSelected = selected === cat.id || (!selected && cat.id === 'all');
@@ -69,14 +69,14 @@ export default function CategoryFilterCollapsible({ selected, onChange }) {
                       setIsExpanded(false);
                     }}
                     className={cn(
-                      "flex items-center gap-2 px-3 py-2.5 rounded-xl transition-all text-sm font-medium",
+                      "flex items-center justify-center gap-1.5 px-2 py-2.5 rounded-xl transition-all text-xs font-medium",
                       isSelected 
                         ? "bg-blue-600 text-white shadow-lg" 
                         : "bg-slate-50 text-slate-700 hover:bg-slate-100"
                     )}
                   >
-                    <CategoryIcon className="w-4 h-4" />
-                    {cat.label}
+                    <CategoryIcon className="w-4 h-4 flex-shrink-0" />
+                    <span className="truncate">{cat.label}</span>
                   </button>
                 );
               })}
