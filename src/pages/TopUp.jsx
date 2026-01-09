@@ -25,6 +25,7 @@ export default function TopUp() {
   
   const [user, setUser] = useState(null);
   const [isActivating, setIsActivating] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState('');
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -85,9 +86,24 @@ export default function TopUp() {
     const duration = moment.duration(nextReset.diff(now));
     const hours = Math.floor(duration.asHours());
     const minutes = duration.minutes();
+    const seconds = duration.seconds();
     
-    return `${hours}h ${minutes}m`;
+    return `${hours}h ${minutes}m ${seconds}s`;
   };
+
+  // Update timer every second
+  useEffect(() => {
+    if (!user || canUseTopup) return;
+    
+    const updateTimer = () => {
+      setTimeRemaining(getTimeUntilNextTopup());
+    };
+    
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+    
+    return () => clearInterval(interval);
+  }, [user, canUseTopup]);
 
   const handleActivateTopUp = async () => {
     if (!canUseTopup) {
@@ -190,10 +206,10 @@ export default function TopUp() {
 
           {!canUseTopup && (
             <div className="mt-4 bg-amber-500/20 backdrop-blur-sm rounded-xl p-4 flex items-start gap-3">
-              <Clock className="w-5 h-5 flex-shrink-0 mt-0.5" />
+              <Clock className="w-5 h-5 flex-shrink-0 mt-0.5 animate-pulse" />
               <div>
                 <p className="font-medium">Próximo Top Up em:</p>
-                <p className="text-sm text-indigo-100">{getTimeUntilNextTopup()}</p>
+                <p className="text-lg font-mono text-indigo-100">{timeRemaining}</p>
               </div>
             </div>
           )}
@@ -262,7 +278,7 @@ export default function TopUp() {
             <AlertCircle className="h-4 w-4 text-amber-600" />
             <AlertDescription className="text-amber-800">
               Você não tem Top Ups disponíveis no momento. Cada usuário recebe 1 Top Up gratuito por dia. 
-              Seu próximo Top Up estará disponível em: <strong>{getTimeUntilNextTopup()}</strong>
+              Seu próximo Top Up estará disponível em: <strong className="font-mono">{timeRemaining}</strong>
             </AlertDescription>
           </Alert>
         )}
