@@ -26,20 +26,41 @@ export default function ReportDialog({ open, onOpenChange, type, itemId, itemTit
     try {
       const user = await base44.auth.me();
       
+      console.log('Tentando enviar email de denúncia...');
+      console.log('Para:', 'vinicius.ts16@gmail.com');
+      console.log('Assunto:', `Denuncia ${type}`);
+      
       const result = await base44.integrations.Core.SendEmail({
         to: 'vinicius.ts16@gmail.com',
-        subject: `Denuncia ${type}`,
-        body: `ID: ${itemId}, Titulo: ${itemTitle}, Usuario: ${user.full_name} (${user.email}), Descricao: ${description}`
+        subject: `Denuncia de ${type}`,
+        body: `
+NOVA DENÚNCIA RECEBIDA
+
+Tipo: ${type}
+ID do item: ${itemId}
+Título: ${itemTitle}
+
+Denunciante:
+Nome: ${user.full_name}
+Email: ${user.email}
+
+Descrição da denúncia:
+${description}
+
+---
+Data: ${new Date().toLocaleString('pt-BR')}
+        `
       });
       
-      console.log('Resultado do envio:', result);
+      console.log('Resposta da integração SendEmail:', JSON.stringify(result, null, 2));
 
-      toast.success('Denúncia enviada com sucesso');
+      toast.success('Denúncia registrada! Verifique o console para confirmar o envio.');
       setDescription('');
       onOpenChange(false);
     } catch (error) {
-      console.error('Erro ao enviar email:', error);
-      toast.error(`Erro ao enviar denúncia: ${error.message || 'Erro desconhecido'}`);
+      console.error('ERRO COMPLETO ao enviar email:', error);
+      console.error('Stack:', error.stack);
+      toast.error(`Falha ao enviar: ${error.message || JSON.stringify(error)}`);
     } finally {
       setIsSending(false);
     }
