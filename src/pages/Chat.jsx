@@ -204,9 +204,9 @@ export default function Chat() {
   const otherId = isBuyer ? conversation.seller_id : conversation.buyer_id;
 
   return (
-    <div className="h-screen flex flex-col bg-slate-100">
+    <div className="fixed inset-0 flex flex-col bg-slate-100 md:relative md:h-screen">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-4 py-3 flex items-center gap-3 flex-shrink-0">
+      <div className="bg-white border-b border-slate-200 px-4 py-3 flex items-center gap-3 flex-shrink-0 mt-14 md:mt-0">
         <Link to={createPageUrl('Messages')} className="p-1 -ml-1">
           <ArrowLeft className="w-5 h-5 text-slate-600" />
         </Link>
@@ -352,7 +352,7 @@ export default function Chat() {
       </div>
 
       {/* Input */}
-      <div className="bg-white border-t border-slate-200 px-4 py-3 flex items-center gap-3 flex-shrink-0 pb-20 md:pb-3">
+      <div className="bg-white border-t border-slate-200 px-4 py-3 flex items-center gap-3 flex-shrink-0 pb-safe mb-16 md:mb-0 md:pb-3">
         <label className="p-2 hover:bg-slate-100 rounded-full cursor-pointer transition-colors">
           <input
             type="file"
