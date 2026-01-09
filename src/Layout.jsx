@@ -268,11 +268,11 @@ export default function Layout({ children, currentPageName }) {
       {/* Mobile Header */}
       <header className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-slate-200 z-40">
         <div className="flex items-center justify-between px-4 h-14">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             {isAuthenticated &&
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="h-10 w-10 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors relative p-0 z-10">
+                <button className="h-12 w-12 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors relative p-0 z-10 -m-2">
                   <Menu className="w-5 h-5 pointer-events-none" />
                   {unreadCount > 0 &&
                 <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs pointer-events-none z-0">
@@ -310,11 +310,9 @@ export default function Layout({ children, currentPageName }) {
               </DropdownMenu>
             }
             
-            {!isAuthenticated && (
-              <Link to={createPageUrl('Home')} className="flex items-center gap-2">
-                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" alt="PenSell" className="h-6" />
-              </Link>
-            )}
+            <Link to={createPageUrl('Home')} className="flex items-center gap-2">
+              <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" alt="PenSell" className="h-6" />
+            </Link>
           </div>
 
           <div className="flex items-center gap-2">
