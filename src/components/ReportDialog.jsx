@@ -27,7 +27,7 @@ export default function ReportDialog({ open, onOpenChange, type, itemId, itemTit
       const user = await base44.auth.me();
       
       await base44.integrations.Core.SendEmail({
-        to: 'seu-email@exemplo.com', // Substitua pelo seu email
+        to: 'vinicius.ts16@gmail.com',
         subject: `Denúncia: ${type} - ${itemTitle || itemId}`,
         body: `
 Denúncia de ${type}

@@ -31,7 +31,7 @@ export default function RequestCommunityDialog({ open, onOpenChange }) {
       const user = await base44.auth.me();
       
       await base44.integrations.Core.SendEmail({
-        to: 'seu-email@exemplo.com', // Substitua pelo seu email
+        to: 'vinicius.ts16@gmail.com',
         subject: `Solicitação de Nova Comunidade: ${communityName}`,
         body: `
 Nova solicitação de comunidade
