@@ -69,7 +69,7 @@ export default function CategoryFilterCollapsible({ selected, onChange }) {
                       setIsExpanded(false);
                     }}
                     className={cn(
-                      "flex items-center justify-center gap-1.5 px-2 py-2.5 rounded-xl transition-all text-xs font-medium",
+                      "flex items-center justify-start gap-1.5 px-3 py-2 rounded-xl transition-all text-xs font-medium",
                       isSelected 
                         ? "bg-blue-600 text-white shadow-lg" 
                         : "bg-slate-50 text-slate-700 hover:bg-slate-100"
