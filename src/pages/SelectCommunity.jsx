@@ -178,11 +178,12 @@ export default function SelectCommunity() {
         </div>
       </div>
 
-      {/* Request Community Dialog */}
-      <RequestCommunityDialog 
-        open={showRequestDialog}
-        onOpenChange={setShowRequestDialog}
-      />
+    {/* Request Community Dialog */}
+    <RequestCommunityDialog 
+      open={showRequestDialog}
+      onOpenChange={setShowRequestDialog}
+    />
+    </div>
     </>
   );
 }
