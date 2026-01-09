@@ -27,7 +27,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger } from
 '@/components/ui/dropdown-menu';
-import { Badge } from '@/components/ui/badge';
+
 import { cn } from '@/lib/utils';
 
 export default function Layout({ children, currentPageName }) {
