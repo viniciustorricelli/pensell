@@ -75,7 +75,7 @@ export default function CategoryFilterCollapsible({ selected, onChange }) {
                         : "bg-slate-50 text-slate-700 hover:bg-slate-100"
                     )}
                   >
-                    <CategoryIcon className="w-4 h-4 flex-shrink-0" />
+                    <CategoryIcon className="w-3 h-3 flex-shrink-0" />
                     <span className="truncate">{cat.label}</span>
                   </button>
                 );
