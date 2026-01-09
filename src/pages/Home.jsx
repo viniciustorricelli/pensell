@@ -187,18 +187,9 @@ export default function Home() {
 
             {/* Main Feed */}
             <div className="px-4 md:px-0 py-6">
-          {!selectedCategory && !searchQuery && (
-            <BoostedAdsCarousel 
-              ads={allAds}
-              currentUserId={user?.id}
-              onFavorite={handleFavorite}
-              favorites={favorites}
-            />
-          )}
-
-          <div className="flex items-center justify-between mb-4 mt-8">
+          <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-slate-800">
-              {selectedCategory ? 'Resultados' : searchQuery ? 'Resultados da Busca' : 'Anúncios'}
+              {selectedCategory ? 'Resultados' : searchQuery ? 'Resultados da Busca' : 'Destaques'}
             </h2>
             <Button 
               variant="ghost" 
