@@ -69,8 +69,16 @@ export default function Layout({ children, currentPageName }) {
         if (authenticated) {
           let userData = await base44.auth.me();
 
+          // Initialize topups for new users
+          if (userData.available_topups === undefined || userData.available_topups === null) {
+            await base44.auth.updateMe({
+              available_topups: 1,
+              last_topup_reset: new Date().toISOString()
+            });
+            userData = await base44.auth.me();
+          }
           // Auto-reset topups if 24h have passed
-          if (userData.last_topup_reset && userData.available_topups === 0) {
+          else if (userData.last_topup_reset && userData.available_topups === 0) {
             const lastReset = new Date(userData.last_topup_reset);
             const now = new Date();
             const hoursSinceReset = (now - lastReset) / (1000 * 60 * 60);

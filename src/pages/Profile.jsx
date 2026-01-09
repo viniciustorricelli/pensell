@@ -60,10 +60,11 @@ export default function Profile() {
   }, []);
 
   // Fetch user's ads
-  const { data: myAds = [] } = useQuery({
+  const { data: myAds = [], isLoading: adsLoading } = useQuery({
     queryKey: ['my-ads', user?.id],
     queryFn: () => base44.entities.Ad.filter({ seller_id: user.id }),
-    enabled: !!user
+    enabled: !!user,
+    staleTime: 30000
   });
 
 
@@ -247,11 +248,19 @@ export default function Profile() {
         {/* Stats */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
-            <p className="text-2xl font-bold text-blue-600">{myAds.length}</p>
+            {adsLoading ? (
+              <Loader2 className="w-6 h-6 animate-spin text-blue-600 mx-auto" />
+            ) : (
+              <p className="text-2xl font-bold text-blue-600">{myAds.length}</p>
+            )}
             <p className="text-sm text-slate-500">Anúncios</p>
           </div>
           <div className="bg-white rounded-2xl p-4 text-center shadow-sm">
-            <p className="text-2xl font-bold text-blue-600">{soldAds.length}</p>
+            {adsLoading ? (
+              <Loader2 className="w-6 h-6 animate-spin text-blue-600 mx-auto" />
+            ) : (
+              <p className="text-2xl font-bold text-blue-600">{soldAds.length}</p>
+            )}
             <p className="text-sm text-slate-500">Vendas</p>
           </div>
         </div>

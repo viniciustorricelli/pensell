@@ -72,8 +72,9 @@ export default function TopUp() {
     enabled: !!adId
   });
 
-  const availableTopups = user?.available_topups || 0;
-  const canUseTopup = availableTopups > 0;
+  // Initialize topups for new users
+  const availableTopups = user?.available_topups ?? 1;
+  const canUseTopup = availableTopups > 0 && (!ad?.is_boosted || (ad.is_boosted && moment(ad.boost_expires_at).isBefore(moment())));
 
   const getTimeUntilNextTopup = () => {
     if (!user?.last_topup_reset) return null;
@@ -106,6 +107,11 @@ export default function TopUp() {
   }, [user, canUseTopup]);
 
   const handleActivateTopUp = async () => {
+    if (ad?.is_boosted && moment(ad.boost_expires_at).isAfter(moment())) {
+      toast.error('Este anúncio já está em destaque!');
+      return;
+    }
+
     if (!canUseTopup) {
       toast.error('Você não tem top ups disponíveis. Aguarde 24 horas!');
       return;
