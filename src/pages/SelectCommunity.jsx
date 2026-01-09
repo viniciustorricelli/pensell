@@ -83,11 +83,11 @@ export default function SelectCommunity() {
     <div className="bg-gradient-to-br from-blue-500 to-blue-600 flex justify-center p-4 py-6">
       <div className="w-full max-w-md">
             <div className="bg-white rounded-3xl p-8 shadow-2xl flex flex-col">
-              <div className="flex justify-center mb-4">
+              <div className="flex justify-center mb-6">
                 <img 
                   src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" 
                   alt="PenSell" 
-                  className="h-20"
+                  className="h-32"
                 />
               </div>
               <h1 className="text-2xl font-bold text-gray-800 text-center mb-4">
