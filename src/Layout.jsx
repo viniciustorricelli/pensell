@@ -335,54 +335,70 @@ export default function Layout({ children, currentPageName }) {
       </main>
 
       {/* Mobile Bottom Navigation */}
-              <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white z-50 safe-area-inset-bottom">
-                <div className="flex items-center justify-around h-20 px-4">
-                  <Link
-                    to={createPageUrl('Messages')}
-                    className={cn(
-                      "flex items-center justify-center w-12 h-12 rounded-full transition-colors",
-                      currentPageName === 'Messages' ? "bg-blue-100 text-blue-600" : "text-slate-400 hover:bg-slate-100"
-                    )}
-                  >
-                    <div className="relative">
-                      <MessageCircle className="w-6 h-6" />
-                      {unreadCount > 0 &&
-                        <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-xs">
-                          {unreadCount}
-                        </Badge>
-                      }
-                    </div>
-                  </Link>
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50 safe-area-inset-bottom">
+        <div className="flex items-center justify-around h-16">
+          {navItems.map((item) => {
+            const isActive = currentPageName === item.page;
+            const Icon = item.icon;
 
-                  {isAuthenticated && (
-                    <Link
-                      to={createPageUrl('CreateAd')}
-                      className="flex items-center justify-center w-14 h-14 bg-blue-600 hover:bg-blue-700 rounded-full shadow-lg -mt-6"
-                    >
-                      <PlusCircle className="w-7 h-7 text-white" />
-                    </Link>
-                  )}
+            if (item.highlight) {
+              return (
+                <Link
+                  key={item.page}
+                  to={createPageUrl(item.page)}
+                  className="flex items-center justify-center -mt-4">
 
-                  {isAuthenticated ? (
-                    <Link
-                      to={createPageUrl('Profile')}
-                      className={cn(
-                        "flex items-center justify-center w-12 h-12 rounded-full transition-colors",
-                        currentPageName === 'Profile' ? "bg-blue-100 text-blue-600" : "text-slate-400 hover:bg-slate-100"
-                      )}
-                    >
-                      <User className="w-6 h-6" />
-                    </Link>
-                  ) : (
-                    <button
-                      onClick={() => base44.auth.redirectToLogin()}
-                      className="flex items-center justify-center w-12 h-12 rounded-full text-slate-400 hover:bg-slate-100 transition-colors"
-                    >
-                      <User className="w-6 h-6" />
-                    </button>
-                  )}
+                  <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg">
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                </Link>);
+
+            }
+
+            return (
+              <Link
+                key={item.page}
+                to={createPageUrl(item.page)}
+                className={cn(
+                  "flex flex-col items-center justify-center gap-1 flex-1 py-2 relative",
+                  isActive ? "text-blue-600" : "text-slate-500"
+                )}>
+
+                <div className="relative flex items-center justify-center">
+                  <Icon className="w-5 h-5" />
+                  {item.badge > 0 &&
+                  <Badge className="absolute -top-2 -right-2 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
+                      {item.badge}
+                    </Badge>
+                  }
                 </div>
-              </nav>
+                <span className="text-xs font-medium">{item.name}</span>
+              </Link>);
+
+          })}
+          
+          {isAuthenticated ?
+          <Link
+            to={createPageUrl('Profile')}
+            className={cn(
+              "flex flex-col items-center justify-center gap-1 flex-1 py-2",
+              currentPageName === 'Profile' ? "text-blue-600" : "text-slate-500"
+            )}>
+
+              <User className="w-5 h-5" />
+              <span className="text-xs font-medium">Perfil</span>
+            </Link> :
+
+          <button
+            onClick={() => base44.auth.redirectToLogin()}
+            className="flex flex-col items-center justify-center gap-1 flex-1 py-2 text-slate-500">
+
+              <User className="w-5 h-5" />
+              <span className="text-xs font-medium">Entrar</span>
+            </button>
+          }
+        </div>
+        </nav>
         <Toaster position="top-center" />
         </div>);
 
