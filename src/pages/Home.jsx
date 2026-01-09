@@ -66,10 +66,10 @@ export default function Home() {
       if (user?.current_community_id) {
         filter.community_id = user.current_community_id;
       }
-      
+
       // Fetch more ads than needed to handle pagination
       let allAds = await base44.entities.Ad.filter(filter, '-created_date', 100);
-      
+
       // Filter by search query if provided
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -77,8 +77,11 @@ export default function Home() {
           ad.title.toLowerCase().includes(query) || 
           ad.description.toLowerCase().includes(query)
         );
+      } else if (!selectedCategory) {
+        // On home (no category), only show boosted ads
+        allAds = allAds.filter(ad => ad.is_boosted);
       }
-      
+
       const skip = (page - 1) * 10;
       return allAds.slice(skip, skip + 10);
     },
@@ -198,22 +201,13 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Boosted Ads Carousel */}
-            {boostedAds.length > 0 && !selectedCategory && (
-              <div className="py-6">
-                <BoostedAdsCarousel 
-                  ads={boostedAds} 
-                  onFavorite={handleFavorite}
-                  favorites={favorites}
-                />
-              </div>
-            )}
+
 
             {/* Main Feed */}
             <div className="px-4 md:px-0 py-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-slate-800">
-              {selectedCategory ? 'Resultados' : 'Anúncios Recentes'}
+              {selectedCategory ? 'Resultados' : searchQuery ? 'Resultados da Busca' : 'Destaques'}
             </h2>
             <Button 
               variant="ghost" 

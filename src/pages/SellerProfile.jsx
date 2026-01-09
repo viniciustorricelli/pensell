@@ -10,8 +10,7 @@ import {
   MapPin,
   Calendar,
   Loader2,
-  Phone,
-  Mail,
+  MessageCircle,
   User as UserIcon
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -188,24 +187,14 @@ export default function SellerProfile() {
                 <p className="text-slate-600 mb-4">{seller.bio}</p>
               )}
 
-              {/* Contact Buttons */}
-              <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                {seller.phone && (
-                  <a href={`https://wa.me/55${seller.phone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer">
-                    <Button size="sm" className="bg-green-600 hover:bg-green-700">
-                      <Phone className="w-4 h-4 mr-2" />
-                      WhatsApp
-                    </Button>
-                  </a>
-                )}
-                {seller.email && (
-                  <a href={`mailto:${seller.email}`}>
-                    <Button size="sm" variant="outline">
-                      <Mail className="w-4 h-4 mr-2" />
-                      Email
-                    </Button>
-                  </a>
-                )}
+              {/* Contact Button */}
+              <div className="flex justify-center md:justify-start">
+                <Link to={createPageUrl(`Messages`)}>
+                  <Button className="bg-blue-600 hover:bg-blue-700">
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    Enviar Mensagem
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
