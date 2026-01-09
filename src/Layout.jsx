@@ -272,7 +272,7 @@ export default function Layout({ children, currentPageName }) {
             {isAuthenticated &&
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors relative p-0 z-10">
+                <button className="h-12 w-12 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors relative p-0 z-10 -m-2">
                   <Menu className="w-5 h-5 pointer-events-none" />
                   {unreadCount > 0 &&
                 <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs pointer-events-none z-0">
