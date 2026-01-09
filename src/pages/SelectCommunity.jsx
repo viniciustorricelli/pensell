@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, Loader2, MapPin } from 'lucide-react';
+import RequestCommunityDialog from '@/components/RequestCommunityDialog';
 import { toast } from 'sonner';
 
 export default function SelectCommunity() {
@@ -12,6 +13,7 @@ export default function SelectCommunity() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCommunity, setSelectedCommunity] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showRequestDialog, setShowRequestDialog] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -155,11 +157,23 @@ export default function SelectCommunity() {
 
           {/* Footer */}
           <div className="text-center mt-6">
-            <p className="text-gray-600 text-sm">Não encontrou sua instituição?</p>
-            <p className="text-gray-500 text-xs mt-1">Entre em contato com o suporte</p>
+            <p className="text-gray-600 text-sm mb-2">Não encontrou sua instituição?</p>
+            <Button
+              variant="link"
+              onClick={() => setShowRequestDialog(true)}
+              className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+            >
+              Solicitar nova comunidade
+            </Button>
           </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+          </div>
+          </div>
+
+          {/* Request Community Dialog */}
+          <RequestCommunityDialog 
+          open={showRequestDialog}
+          onOpenChange={setShowRequestDialog}
+          />
+          </div>
+          );
+          }

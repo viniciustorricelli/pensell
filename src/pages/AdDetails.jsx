@@ -33,6 +33,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import ReportDialog from '@/components/ReportDialog';
 import { toast } from 'sonner';
 import moment from 'moment';
 
@@ -44,7 +45,7 @@ export default function AdDetails() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showBoostDialog, setShowBoostDialog] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(null);
-  const [isReporting, setIsReporting] = useState(false);
+  const [showReportDialog, setShowReportDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isMarkingSold, setIsMarkingSold] = useState(false);
   const queryClient = useQueryClient();
@@ -251,26 +252,12 @@ export default function AdDetails() {
     }
   }, [ad?.is_boosted, ad?.boost_expires_at]);
 
-  const handleReport = async () => {
+  const handleReport = () => {
     if (!user) {
       toast.error('Faça login para denunciar');
       return;
     }
-
-    setIsReporting(true);
-    try {
-      await base44.integrations.Core.SendEmail({
-        to: 'vinicius.ts16@gmail.com',
-        subject: `Denúncia de Anúncio - ${ad.title}`,
-        body: `Um usuário denunciou o anúncio:\n\nID: ${ad.id}\nTítulo: ${ad.title}\nVendedor: ${ad.seller_name}\nURL: ${window.location.href}\n\nUsuário que denunciou: ${user.full_name} (${user.email})`
-      });
-      toast.success('Denúncia enviada! Obrigado pela colaboração.');
-    } catch (error) {
-      console.error('Erro ao denunciar:', error);
-      toast.error('Erro ao enviar denúncia. Tente novamente.');
-    } finally {
-      setIsReporting(false);
-    }
+    setShowReportDialog(true);
   };
 
   const handleDelete = async () => {
@@ -579,14 +566,9 @@ export default function AdDetails() {
 
               <button 
                 onClick={handleReport}
-                disabled={isReporting}
-                className="flex items-center gap-2 text-sm text-slate-500 hover:text-red-500 transition-colors disabled:opacity-50"
+                className="flex items-center gap-2 text-sm text-slate-500 hover:text-red-500 transition-colors"
               >
-                {isReporting ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Flag className="w-4 h-4" />
-                )}
+                <Flag className="w-4 h-4" />
                 Denunciar anúncio
               </button>
             </div>
@@ -620,6 +602,15 @@ export default function AdDetails() {
           </div>
         </div>
       )}
+
+      {/* Report Dialog */}
+      <ReportDialog 
+        open={showReportDialog}
+        onOpenChange={setShowReportDialog}
+        type="Anúncio"
+        itemId={ad?.id}
+        itemTitle={ad?.title}
+      />
     </div>
   );
 }
