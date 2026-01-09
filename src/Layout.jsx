@@ -30,6 +30,7 @@ import {
 '@/components/ui/dropdown-menu';
 
 import { cn } from '@/lib/utils';
+import { Toaster } from 'sonner';
 
 export default function Layout({ children, currentPageName }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -397,7 +398,8 @@ export default function Layout({ children, currentPageName }) {
             </button>
           }
         </div>
-      </nav>
-    </div>);
+        </nav>
+        <Toaster />
+        </div>);
 
-}
+        }
