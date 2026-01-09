@@ -266,8 +266,8 @@ export default function Layout({ children, currentPageName }) {
       </header>
 
       {/* Mobile Header */}
-      <header className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-slate-200 z-50">
-        <div className="flex items-center justify-between px-4 h-14 py-2">
+      <header className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-slate-200 z-40">
+        <div className="flex items-center justify-between px-4 h-14">
           <div className="flex items-center gap-2">
             {isAuthenticated &&
             <DropdownMenu>
