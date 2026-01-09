@@ -37,6 +37,30 @@ export default function Layout({ children, currentPageName }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  const { data: unreadConversations = [] } = useQuery({
+    queryKey: ['unread-conversations', user?.id],
+    queryFn: async () => {
+      if (!user) return [];
+      const convos = await base44.entities.Conversation.filter({
+        $or: [{ buyer_id: user.id }, { seller_id: user.id }]
+      });
+      return convos.filter((c) =>
+      c.buyer_id === user.id && c.unread_buyer > 0 ||
+      c.seller_id === user.id && c.unread_seller > 0
+      );
+    },
+    enabled: !!user,
+    staleTime: 15000,
+    refetchInterval: 30000
+    });
+
+  const unreadCount = unreadConversations.length;
+
+  const navItems = [
+  { name: 'Home', icon: () => <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/28e3f8f94_CpiadePenSell3.jpg" alt="Home" className="w-9 h-9 object-contain" />, page: 'Home' },
+  { name: 'Anunciar', icon: PlusCircle, page: 'CreateAd', highlight: true }];
+
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -77,6 +101,10 @@ export default function Layout({ children, currentPageName }) {
     checkAuth();
   }, [currentPageName]);
 
+  const handleLogout = () => {
+    base44.auth.logout(createPageUrl('Home'));
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
@@ -90,34 +118,6 @@ export default function Layout({ children, currentPageName }) {
       </div>
     );
   }
-
-  const { data: unreadConversations = [] } = useQuery({
-    queryKey: ['unread-conversations', user?.id],
-    queryFn: async () => {
-      if (!user) return [];
-      const convos = await base44.entities.Conversation.filter({
-        $or: [{ buyer_id: user.id }, { seller_id: user.id }]
-      });
-      return convos.filter((c) =>
-      c.buyer_id === user.id && c.unread_buyer > 0 ||
-      c.seller_id === user.id && c.unread_seller > 0
-      );
-    },
-    enabled: !!user,
-    staleTime: 15000,
-    refetchInterval: 30000
-    });
-
-  const unreadCount = unreadConversations.length;
-
-  const navItems = [
-  { name: 'Home', icon: () => <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/28e3f8f94_CpiadePenSell3.jpg" alt="Home" className="w-9 h-9 object-contain" />, page: 'Home' },
-  { name: 'Anunciar', icon: PlusCircle, page: 'CreateAd', highlight: true }];
-
-
-  const handleLogout = () => {
-    base44.auth.logout(createPageUrl('Home'));
-  };
 
   return (
     <div className="min-h-screen bg-slate-50">
