@@ -10,6 +10,7 @@ import Profile from './pages/Profile';
 import Search from './pages/Search';
 import SelectCommunity from './pages/SelectCommunity';
 import TopUp from './pages/TopUp';
+import SellerProfile from './pages/SellerProfile';
 import __Layout from './Layout.jsx';
 
 
@@ -26,6 +27,7 @@ export const PAGES = {
     "Search": Search,
     "SelectCommunity": SelectCommunity,
     "TopUp": TopUp,
+    "SellerProfile": SellerProfile,
 }
 
 export const pagesConfig = {
