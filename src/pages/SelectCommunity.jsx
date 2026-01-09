@@ -80,15 +80,6 @@ export default function SelectCommunity() {
   }
 
   return (
-    <>
-    <style>{`
-      [data-sonner-toaster] {
-        top: 1rem !important;
-      }
-      [data-sonner-toast] {
-        margin-top: 0 !important;
-      }
-    `}</style>
     <div className="min-h-screen bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-3xl p-8 shadow-2xl">
@@ -178,12 +169,11 @@ export default function SelectCommunity() {
         </div>
       </div>
 
-    {/* Request Community Dialog */}
-    <RequestCommunityDialog 
-      open={showRequestDialog}
-      onOpenChange={setShowRequestDialog}
-    />
+      {/* Request Community Dialog */}
+      <RequestCommunityDialog 
+        open={showRequestDialog}
+        onOpenChange={setShowRequestDialog}
+      />
     </div>
-    </>
   );
 }
