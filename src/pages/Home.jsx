@@ -146,7 +146,7 @@ export default function Home() {
         {/* Community Selector & Category Filter */}
         {user && user.current_community_id && (
           <div className="pt-4 pb-4 px-4 bg-slate-50 sticky top-14 md:top-16 z-30 border-b border-slate-100">
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex justify-center items-center gap-3">
               <CommunitySelector user={user} onCommunityChange={handleCommunityChange} />
               <CategoryFilterCollapsible 
                 selected={selectedCategory} 

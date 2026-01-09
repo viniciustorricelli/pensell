@@ -83,11 +83,11 @@ export default function SelectCommunity() {
     <div className="bg-gradient-to-br from-blue-500 to-blue-600 flex justify-center p-4 py-6">
       <div className="w-full max-w-md">
             <div className="bg-white rounded-3xl p-8 shadow-2xl flex flex-col">
-              <div className="flex justify-center mb-6">
+              <div className="flex justify-center mb-4">
                 <img 
                   src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" 
                   alt="PenSell" 
-                  className="h-32"
+                  className="h-20"
                 />
               </div>
               <h1 className="text-2xl font-bold text-gray-800 text-center mb-4">
@@ -155,18 +155,18 @@ export default function SelectCommunity() {
             )}
           </Button>
 
+          {/* Footer */}
+          <div className="text-center mt-3">
+            <p className="text-gray-600 text-sm mb-2">Não encontrou sua instituição?</p>
+            <Button
+              variant="link"
+              onClick={() => setShowRequestDialog(true)}
+              className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+            >
+              Solicitar nova comunidade
+            </Button>
           </div>
-      </div>
-
-      {/* Footer Button */}
-      <div className="text-center mt-4">
-        <Button
-          variant="link"
-          onClick={() => setShowRequestDialog(true)}
-          className="text-blue-600 hover:text-blue-700 text-sm font-medium"
-        >
-          Não encontrou? Solicitar nova comunidade
-        </Button>
+        </div>
       </div>
 
       {/* Request Community Dialog */}
