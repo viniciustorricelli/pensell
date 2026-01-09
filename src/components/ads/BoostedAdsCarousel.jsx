@@ -109,7 +109,7 @@ export default function BoostedAdsCarousel({ ads, onFavorite, favorites = [] }) 
                   <div className="w-full h-full bg-slate-100" />
                 )}
                 <div className="absolute top-3 left-3">
-                  <div className="bg-gradient-to-r from-amber-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-lg">
+                  <div className="bg-amber-100 text-amber-700 border border-amber-200 px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
                     <Zap className="w-3 h-3" />
                     Destaque
                   </div>

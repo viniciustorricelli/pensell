@@ -40,8 +40,8 @@ export default function AdCard({ ad, onFavorite, isFavorited, showBoostTimer = t
       <div className={cn(
         "bg-white rounded-2xl overflow-hidden transition-all duration-300",
         "hover:shadow-xl hover:-translate-y-1",
-        "border border-slate-100",
-        ad.is_boosted && "ring-2 ring-amber-400 ring-offset-2"
+        "border",
+        ad.is_boosted ? "border-amber-200 bg-amber-50/30" : "border-slate-100"
       )}>
         {/* Image Container */}
         <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
@@ -60,12 +60,9 @@ export default function AdCard({ ad, onFavorite, isFavorited, showBoostTimer = t
           {/* Boost Badge */}
           {ad.is_boosted && (
             <div className="absolute top-3 left-3">
-              <Badge className={cn(
-                "bg-gradient-to-r from-amber-400 to-orange-500 text-white border-0 shadow-lg",
-                "flex items-center gap-1.5 px-2.5 py-1"
-              )}>
-                <Zap className="w-3.5 h-3.5" />
-                <span className="font-semibold text-xs">Destaque</span>
+              <Badge className="bg-amber-100 text-amber-700 border border-amber-200 text-xs font-medium">
+                <Zap className="w-3 h-3 mr-1" />
+                Destaque
               </Badge>
             </div>
           )}
