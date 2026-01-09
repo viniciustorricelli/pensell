@@ -53,31 +53,33 @@ ${description}
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md bg-white/95 backdrop-blur-sm shadow-2xl border-2 border-red-100">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-xl font-bold text-slate-800">
-            <AlertCircle className="w-5 h-5 text-red-600" />
+      <DialogContent className="max-w-lg bg-white/95 backdrop-blur-md shadow-2xl border-0">
+        <DialogHeader className="text-center pb-2">
+          <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+            <AlertCircle className="w-8 h-8 text-red-600" />
+          </div>
+          <DialogTitle className="text-2xl font-bold text-gray-800">
             Denunciar {type}
           </DialogTitle>
-          <DialogDescription className="text-slate-600">
+          <DialogDescription className="text-gray-600 text-base">
             Descreva o motivo da denúncia. Nossa equipe irá analisar.
           </DialogDescription>
         </DialogHeader>
         
-        <div className="space-y-4">
+        <div className="space-y-6 pt-4">
           <Textarea
             placeholder="Descreva o problema..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            rows={5}
-            className="resize-none bg-slate-50 border-slate-200 focus:border-red-400 focus:ring-red-400"
+            rows={6}
+            className="resize-none bg-white border-2 border-gray-200 focus:border-red-400 text-base"
           />
           
-          <div className="flex gap-3">
+          <div className="flex gap-4">
             <Button
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1 border-slate-300 hover:bg-slate-100"
+              className="flex-1 h-12 text-base border-2 hover:bg-gray-50"
               disabled={isSending}
             >
               Cancelar
@@ -85,10 +87,10 @@ ${description}
             <Button
               onClick={handleSubmit}
               disabled={isSending}
-              className="flex-1 bg-red-600 hover:bg-red-700 text-white shadow-lg"
+              className="flex-1 h-12 text-base bg-red-600 hover:bg-red-700 text-white font-semibold"
             >
               {isSending ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-5 h-5 animate-spin" />
               ) : (
                 'Enviar Denúncia'
               )}
