@@ -379,11 +379,10 @@ export default function AdDetails() {
             )}
 
             {/* Boost Badge */}
-            {ad.is_boosted && (
+            {ad.is_boosted && ad.boost_expires_at && moment(ad.boost_expires_at).isAfter(moment()) && (
               <div className="absolute top-4 left-4">
-                <Badge className="bg-gradient-to-r from-amber-400 to-orange-500 text-white border-0 shadow-lg px-3 py-1.5">
-                  <Zap className="w-4 h-4 mr-1" />
-                  Destaque
+                <Badge className="bg-gradient-to-r from-amber-400 to-orange-500 text-white border-0 shadow-lg px-2 py-1.5">
+                  <Zap className="w-5 h-5" />
                 </Badge>
               </div>
             )}
@@ -439,7 +438,7 @@ export default function AdDetails() {
               </div>
 
               {/* Boost Timer */}
-              {ad.is_boosted && timeRemaining && (
+              {ad.is_boosted && ad.boost_expires_at && moment(ad.boost_expires_at).isAfter(moment()) && timeRemaining && (
                 <div className="mt-4 p-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
                   <div className="flex items-center gap-2 text-amber-700">
                     <Clock className="w-4 h-4" />
@@ -524,7 +523,7 @@ export default function AdDetails() {
             {/* Seller Card */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <Link 
-                to={createPageUrl(`SellerProfile?id=${ad.seller_id}`)}
+                to={isOwner ? createPageUrl('Profile') : createPageUrl(`SellerProfile?id=${ad.seller_id}`)}
                 className="flex items-center gap-3 mb-4 hover:opacity-80 transition-opacity"
               >
                 <Avatar className="w-14 h-14">

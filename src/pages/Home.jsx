@@ -33,27 +33,7 @@ export default function Home() {
     loadUser();
   }, []);
 
-  // Fetch boosted ads
-  const { data: boostedAds = [] } = useQuery({
-    queryKey: ['boosted-ads', user?.current_community_id],
-    queryFn: async () => {
-      const filter = {
-        is_boosted: true,
-        status: 'active'
-      };
-      if (user?.current_community_id) {
-        filter.community_id = user.current_community_id;
-      }
-      const ads = await base44.entities.Ad.filter(filter, '-created_date');
-      // Filter out expired boosts
-      return ads.filter(ad => 
-        ad.boost_expires_at && moment(ad.boost_expires_at).isAfter(moment())
-      );
-    },
-    enabled: !!user?.current_community_id,
-    staleTime: 60000,
-    refetchInterval: 120000
-  });
+
 
   // Fetch regular ads with pagination
   const { data: regularAds = [], isLoading, isFetching } = useQuery({
@@ -78,8 +58,10 @@ export default function Home() {
           ad.description.toLowerCase().includes(query)
         );
       } else if (!selectedCategory) {
-        // On home (no category), only show boosted ads
-        allAds = allAds.filter(ad => ad.is_boosted);
+        // On home (no category), only show boosted and non-expired ads
+        allAds = allAds.filter(ad => 
+          ad.is_boosted && ad.boost_expires_at && moment(ad.boost_expires_at).isAfter(moment())
+        );
       }
 
       const skip = (page - 1) * 10;
