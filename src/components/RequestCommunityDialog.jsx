@@ -60,49 +60,49 @@ Solicitado por: ${user.full_name} (${user.email})
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md bg-white/95 backdrop-blur-sm shadow-2xl border-2 border-blue-100">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-xl font-bold text-slate-800">
             <Building2 className="w-5 h-5 text-blue-600" />
             Solicitar Nova Comunidade
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-slate-600">
             Informe os dados da instituição que você gostaria de adicionar
           </DialogDescription>
         </DialogHeader>
         
         <div className="space-y-4">
           <div>
-            <Label htmlFor="name">Nome da Instituição *</Label>
+            <Label htmlFor="name" className="text-slate-700 font-medium">Nome da Instituição *</Label>
             <Input
               id="name"
               placeholder="Ex: Universidade Federal..."
               value={communityName}
               onChange={(e) => setCommunityName(e.target.value)}
-              className="mt-1"
+              className="mt-1 bg-slate-50 border-slate-200 focus:border-blue-400 focus:ring-blue-400"
             />
           </div>
           
           <div>
-            <Label htmlFor="city">Cidade *</Label>
+            <Label htmlFor="city" className="text-slate-700 font-medium">Cidade *</Label>
             <Input
               id="city"
               placeholder="Ex: São Paulo"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="mt-1"
+              className="mt-1 bg-slate-50 border-slate-200 focus:border-blue-400 focus:ring-blue-400"
             />
           </div>
           
           <div>
-            <Label htmlFor="details">Informações Adicionais</Label>
+            <Label htmlFor="details" className="text-slate-700 font-medium">Informações Adicionais</Label>
             <Textarea
               id="details"
               placeholder="Estado, site, ou outras informações..."
               value={details}
               onChange={(e) => setDetails(e.target.value)}
               rows={3}
-              className="mt-1 resize-none"
+              className="mt-1 resize-none bg-slate-50 border-slate-200 focus:border-blue-400 focus:ring-blue-400"
             />
           </div>
           
@@ -110,7 +110,7 @@ Solicitado por: ${user.full_name} (${user.email})
             <Button
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1"
+              className="flex-1 border-slate-300 hover:bg-slate-100"
               disabled={isSending}
             >
               Cancelar
@@ -118,7 +118,7 @@ Solicitado por: ${user.full_name} (${user.email})
             <Button
               onClick={handleSubmit}
               disabled={isSending}
-              className="flex-1 bg-blue-600 hover:bg-blue-700"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
             >
               {isSending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

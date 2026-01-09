@@ -53,13 +53,13 @@ ${description}
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md bg-white/95 backdrop-blur-sm shadow-2xl border-2 border-red-100">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-xl font-bold text-slate-800">
             <AlertCircle className="w-5 h-5 text-red-600" />
             Denunciar {type}
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-slate-600">
             Descreva o motivo da denúncia. Nossa equipe irá analisar.
           </DialogDescription>
         </DialogHeader>
@@ -70,14 +70,14 @@ ${description}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={5}
-            className="resize-none"
+            className="resize-none bg-slate-50 border-slate-200 focus:border-red-400 focus:ring-red-400"
           />
           
           <div className="flex gap-3">
             <Button
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="flex-1"
+              className="flex-1 border-slate-300 hover:bg-slate-100"
               disabled={isSending}
             >
               Cancelar
@@ -85,7 +85,7 @@ ${description}
             <Button
               onClick={handleSubmit}
               disabled={isSending}
-              className="flex-1 bg-red-600 hover:bg-red-700"
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white shadow-lg"
             >
               {isSending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
