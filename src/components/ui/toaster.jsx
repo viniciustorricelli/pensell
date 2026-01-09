@@ -41,7 +41,7 @@ export function Toaster() {
             </Toast>
           );
         })}
-        <ToastViewport />
+        <ToastViewport style={{ pointerEvents: 'none' }} />
       </ToastProvider>
     </>
   );
