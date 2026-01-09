@@ -114,14 +114,14 @@ export default function BoostedAdsCarousel({ ads, onFavorite, favorites = [], cu
                     Destaque
                   </div>
                 </div>
-                {timers[ad.id] && (
-                  <div className="absolute bottom-3 left-3 right-3">
-                    <div className="bg-black/70 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5">
-                      <Clock className="w-3 h-3" />
-                      Expira em {timers[ad.id]}
-                    </div>
-                  </div>
-                )}
+                {timers[ad.id] && ad.seller_id === currentUserId && (
+                   <div className="absolute bottom-3 left-3 right-3">
+                     <div className="bg-black/70 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5">
+                       <Clock className="w-3 h-3" />
+                       Expira em {timers[ad.id]}
+                     </div>
+                   </div>
+                 )}
               </div>
               <div className="p-4">
                 <h3 className="font-semibold text-slate-800 truncate mb-1">{ad.title}</h3>
