@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import moment from 'moment';
 
-export default function AdCard({ ad, onFavorite, isFavorited, showBoostTimer = true }) {
+export default function AdCard({ ad, onFavorite, isFavorited, currentUserId }) {
   const isExpiringSoon = ad.is_boosted && ad.boost_expires_at && 
     moment(ad.boost_expires_at).diff(moment(), 'hours') < 6;
 
