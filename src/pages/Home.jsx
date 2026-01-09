@@ -219,6 +219,7 @@ export default function Home() {
                     ad={ad}
                     onFavorite={handleFavorite}
                     isFavorited={favorites.some(f => f.ad_id === ad.id)}
+                    currentUserId={user?.id}
                   />
                 ))}
               </div>
