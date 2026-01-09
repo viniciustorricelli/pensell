@@ -310,8 +310,8 @@ export default function Layout({ children, currentPageName }) {
               </DropdownMenu>
             }
             
-            <Link to={createPageUrl('Home')} className="flex items-center gap-2">
-              <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" alt="PenSell" className="h-6" />
+            <Link to={createPageUrl('Home')} className="flex flex-1 items-center justify-center">
+              <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" alt="PenSell" className="h-10" />
             </Link>
           </div>
 
