@@ -46,8 +46,8 @@ export default function Layout({ children, currentPageName }) {
         $or: [{ buyer_id: user.id }, { seller_id: user.id }]
       });
       return convos.filter((c) =>
-      c.buyer_id === user.id && c.unread_buyer > 0 ||
-      c.seller_id === user.id && c.unread_seller > 0
+        (c.buyer_id === user.id && c.unread_buyer > 0) ||
+        (c.seller_id === user.id && c.unread_seller > 0)
       );
     },
     enabled: !!user,
