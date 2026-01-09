@@ -120,16 +120,16 @@ export default function Layout({ children, currentPageName }) {
             <div className="flex items-center gap-3">
               {isAuthenticated &&
               <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="rounded-full relative h-10 w-10">
-                      <Menu className="w-6 h-6" />
-                      {unreadCount > 0 &&
-                    <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
-                          {unreadCount}
-                        </Badge>
-                    }
-                    </Button>
-                  </DropdownMenuTrigger>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="rounded-full relative h-12 w-12">
+                    <Menu className="w-6 h-6" />
+                    {unreadCount > 0 &&
+                  <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
+                        {unreadCount}
+                      </Badge>
+                  }
+                  </Button>
+                </DropdownMenuTrigger>
                   <DropdownMenuContent align="start" className="w-56">
                     <DropdownMenuItem asChild>
                       <Link to={createPageUrl('Messages')} className="flex items-center gap-2 cursor-pointer">
@@ -243,16 +243,16 @@ export default function Layout({ children, currentPageName }) {
           <div className="flex items-center gap-2">
             {isAuthenticated &&
             <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-10 w-10 relative p-2">
-                    <Menu className="w-6 h-6" />
-                    {unreadCount > 0 &&
-                  <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
-                        {unreadCount}
-                      </Badge>
-                  }
-                  </Button>
-                </DropdownMenuTrigger>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-12 w-12 relative">
+                  <Menu className="w-6 h-6" />
+                  {unreadCount > 0 &&
+                <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
+                      {unreadCount}
+                    </Badge>
+                }
+                </Button>
+              </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-56">
                   <DropdownMenuItem asChild>
                     <Link to={createPageUrl('Messages')} className="flex items-center gap-2 cursor-pointer">
