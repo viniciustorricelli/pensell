@@ -86,8 +86,8 @@ export default function AdCard({ ad, onFavorite, isFavorited, currentUserId }) {
             </button>
           )}
 
-          {/* Boost Timer */}
-          {showBoostTimer && ad.is_boosted && ad.boost_expires_at && moment(ad.boost_expires_at).isAfter(moment()) && getTimeRemaining() && (
+          {/* Boost Timer - Only for creator */}
+          {currentUserId === ad.seller_id && ad.is_boosted && ad.boost_expires_at && moment(ad.boost_expires_at).isAfter(moment()) && getTimeRemaining() && (
             <div className={cn(
               "absolute bottom-3 left-3 right-3",
               "bg-black/60 backdrop-blur-sm rounded-lg px-3 py-1.5",
