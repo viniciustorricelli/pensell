@@ -116,13 +116,39 @@ export default function CreateAd() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!formData.title || !formData.description || !formData.price || !formData.category || !formData.location_city || !formData.location_neighborhood) {
-      toast.error('Preencha todos os campos obrigatórios');
+    // Validação específica para cada campo
+    if (formData.images.length === 0) {
+      toast.error('É necessário adicionar pelo menos uma foto');
       return;
     }
 
-    if (formData.images.length === 0) {
-      toast.error('Adicione pelo menos uma imagem');
+    if (!formData.title.trim()) {
+      toast.error('É necessário adicionar um título');
+      return;
+    }
+
+    if (!formData.description.trim()) {
+      toast.error('É necessário adicionar uma descrição');
+      return;
+    }
+
+    if (!formData.price || parseFloat(formData.price) <= 0) {
+      toast.error('É necessário adicionar um preço válido');
+      return;
+    }
+
+    if (!formData.category) {
+      toast.error('É necessário selecionar uma categoria');
+      return;
+    }
+
+    if (!formData.location_city.trim()) {
+      toast.error('É necessário adicionar a cidade');
+      return;
+    }
+
+    if (!formData.location_neighborhood.trim()) {
+      toast.error('É necessário adicionar o bairro/comunidade');
       return;
     }
 
