@@ -99,11 +99,12 @@ export default function TopUp() {
     try {
       const now = moment();
       
-      // Update ad to be boosted
+      // Update ad to be boosted and active
       await base44.entities.Ad.update(ad.id, {
         is_boosted: true,
         boost_expires_at: now.clone().add(24, 'hours').toISOString(),
-        boost_package: '24h'
+        boost_package: '24h',
+        status: 'active'
       });
 
       // Decrease user's available topups and set the timer
@@ -112,7 +113,7 @@ export default function TopUp() {
         last_topup_reset: now.toISOString()
       });
 
-      toast.success('Top Up ativado! Seu anúncio agora está em destaque por 24h');
+      toast.success('Top Up ativado! Seu anúncio está visível e em destaque por 24h');
       queryClient.invalidateQueries(['ad', adId]);
       
       setTimeout(() => {

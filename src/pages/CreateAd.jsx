@@ -144,7 +144,7 @@ export default function CreateAd() {
         seller_id: user.id,
         seller_name: user.full_name,
         seller_photo: user.profile_photo,
-        status: 'active',
+        status: 'pending_activation',
         views_count: 0,
         saves_count: 0,
         chat_clicks: 0,
@@ -153,8 +153,8 @@ export default function CreateAd() {
         community_name: community?.name || ''
       });
 
-      toast.success('Anúncio publicado com sucesso!');
-      window.location.href = createPageUrl(`AdDetails?id=${ad.id}`);
+      toast.success('Anúncio criado! Ative-o para ficar visível.');
+      window.location.href = createPageUrl(`TopUp?id=${ad.id}`);
     } catch (error) {
       toast.error('Erro ao publicar anúncio');
     } finally {
