@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import moment from 'moment';
 
-export default function BoostedAdsCarousel({ ads, onFavorite, favorites = [] }) {
-  const scrollRef = useRef(null);
-  const [timers, setTimers] = useState({});
+export default function BoostedAdsCarousel({ ads, onFavorite, favorites = [], currentUserId }) {
+   const scrollRef = useRef(null);
+   const [timers, setTimers] = useState({});
 
   const scroll = (direction) => {
     if (scrollRef.current) {
