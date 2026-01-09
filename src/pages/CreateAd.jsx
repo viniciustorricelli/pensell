@@ -152,9 +152,6 @@ export default function CreateAd() {
       return;
     }
 
-    try {
-      setIsSubmitting(true);
-    try {
       if (!user.current_community_id) {
         toast.error('Selecione uma comunidade primeiro');
         window.location.href = createPageUrl('SelectCommunity');
@@ -184,7 +181,6 @@ export default function CreateAd() {
       window.location.href = createPageUrl(`TopUp?id=${ad.id}`);
     } catch (error) {
       toast.error('Erro ao publicar anúncio');
-    } finally {
       setIsSubmitting(false);
     }
   };
