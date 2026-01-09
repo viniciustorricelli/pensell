@@ -187,7 +187,7 @@ export default function Layout({ children, currentPageName }) {
               }
               
               <Link to={createPageUrl('Home')} className="flex items-center gap-2">
-                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" alt="PenSell" className="h-8" />
+                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/d3d18cad3_Designsemnome1.png" alt="PenSell" className="h-8" />
               </Link>
             </div>
 
@@ -310,7 +310,7 @@ export default function Layout({ children, currentPageName }) {
             }
             
             <Link to={createPageUrl('Home')} className="flex items-center gap-2">
-              <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" alt="PenSell" className="h-6" />
+              <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/d3d18cad3_Designsemnome1.png" alt="PenSell" className="h-6" />
             </Link>
           </div>
 
