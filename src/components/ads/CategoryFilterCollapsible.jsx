@@ -56,7 +56,7 @@ export default function CategoryFilterCollapsible({ selected, onChange }) {
             onClick={() => setIsExpanded(false)}
           />
           <div className="absolute top-full left-0 mt-2 bg-white rounded-2xl shadow-xl p-4 z-50 w-80 max-w-[calc(100vw-2rem)]">
-            <div className="grid grid-cols-2 gap-2">
+            <div className="flex flex-col gap-2">
               {categories.map((cat) => {
                 const CategoryIcon = cat.icon;
                 const isSelected = selected === cat.id || (!selected && cat.id === 'all');
