@@ -142,6 +142,15 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      {/* Hero Section with Image */}
+      <div className="relative h-64 md:h-96 w-full bg-gradient-to-r from-blue-600 to-blue-400 overflow-hidden">
+        <img 
+          src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/d3d18cad3_Designsemnome1.png" 
+          alt="PenSell" 
+          className="w-full h-full object-cover"
+        />
+      </div>
+
       <div className="max-w-7xl mx-auto">
         {/* Community Selector & Category Filter */}
         {user && user.current_community_id && (
