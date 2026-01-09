@@ -289,29 +289,41 @@ export default function TopUp() {
           </Alert>
         )}
 
-        {/* Action Button */}
-        <Button
-          onClick={handleActivateTopUp}
-          disabled={!canUseTopup || isActivating}
-          className="w-full h-14 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-lg font-semibold rounded-xl disabled:opacity-50"
-        >
-          {isActivating ? (
-            <>
-              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-              Ativando Top Up...
-            </>
-          ) : !canUseTopup ? (
-            <>
-              <Clock className="w-5 h-5 mr-2" />
-              Aguarde até amanhã
-            </>
-          ) : (
-            <>
-              <Zap className="w-5 h-5 mr-2" />
-              Ativar Top Up Grátis
-            </>
+        {/* Action Buttons */}
+        <div className="space-y-3">
+          <Button
+            onClick={handleActivateTopUp}
+            disabled={!canUseTopup || isActivating}
+            className="w-full h-14 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-lg font-semibold rounded-xl disabled:opacity-50"
+          >
+            {isActivating ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Ativando Top Up...
+              </>
+            ) : !canUseTopup ? (
+              <>
+                <Clock className="w-5 h-5 mr-2" />
+                Próximo em {timeRemaining}
+              </>
+            ) : (
+              <>
+                <Zap className="w-5 h-5 mr-2" />
+                Ativar Top Up Grátis (24h)
+              </>
+            )}
+          </Button>
+
+          {!canUseTopup && (
+            <Button
+              variant="outline"
+              className="w-full h-14 text-lg font-semibold rounded-xl border-2"
+              disabled
+            >
+              Comprar Mais Top Ups (Em breve)
+            </Button>
           )}
-        </Button>
+        </div>
       </div>
     </div>
   );

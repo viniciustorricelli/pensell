@@ -213,36 +213,25 @@ export default function MyAds() {
           {/* Boost Status */}
           {ad.is_boosted && getTimeRemaining(ad.boost_expires_at) && (
             <div className="mt-2">
-              <Badge className="bg-gradient-to-r from-amber-400 to-orange-500 text-white border-0">
+              <Badge className="bg-amber-100 text-amber-700 border border-amber-200">
                 <Zap className="w-3 h-3 mr-1" />
                 Destaque • {getTimeRemaining(ad.boost_expires_at)}
               </Badge>
             </div>
           )}
 
-          {ad.status === 'pending_activation' && (
-            <Link to={createPageUrl(`TopUp?id=${ad.id}`)}>
-              <Button 
-                size="sm" 
-                className="mt-2 bg-orange-600 hover:bg-orange-700 text-white"
-              >
-                <Zap className="w-3.5 h-3.5 mr-1" />
-                Ativar Anúncio
-              </Button>
-            </Link>
-          )}
-          {!ad.is_boosted && ad.status === 'active' && (
-            <Link to={createPageUrl(`TopUp?id=${ad.id}`)}>
-              <Button 
-                size="sm" 
-                variant="outline" 
-                className="mt-2 text-indigo-600 border-indigo-300 hover:bg-indigo-50"
-              >
-                <Zap className="w-3.5 h-3.5 mr-1" />
-                Top Up
-              </Button>
-            </Link>
-          )}
+          <Link to={createPageUrl(`TopUp?id=${ad.id}`)}>
+            <Button 
+              size="sm" 
+              className={ad.status === 'pending_activation' 
+                ? "mt-2 bg-orange-600 hover:bg-orange-700 text-white"
+                : "mt-2 bg-indigo-600 hover:bg-indigo-700 text-white"
+              }
+            >
+              <Zap className="w-3.5 h-3.5 mr-1" />
+              {ad.status === 'pending_activation' ? 'Ativar' : 'Top Up'}
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

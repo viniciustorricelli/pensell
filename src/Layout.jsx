@@ -50,8 +50,8 @@ export default function Layout({ children, currentPageName }) {
       );
     },
     enabled: !!user,
-    staleTime: 15000,
-    refetchInterval: 30000
+    staleTime: 60000,
+    refetchInterval: 60000
     });
 
   const unreadCount = unreadConversations.length;
