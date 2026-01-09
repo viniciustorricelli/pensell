@@ -16,7 +16,6 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
-  const [allAds, setAllAds] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const queryClient = useQueryClient();
 
