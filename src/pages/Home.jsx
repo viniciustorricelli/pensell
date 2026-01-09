@@ -70,10 +70,8 @@ export default function Home() {
     staleTime: 30000
   });
 
-  // Update allAds when regularAds changes
+  // Update hasMore when regularAds changes
   useEffect(() => {
-    setAllAds(regularAds);
-    // Check if there are more ads by seeing if we got a full page
     setHasMore(regularAds.length === 10);
   }, [regularAds, page]);
 
