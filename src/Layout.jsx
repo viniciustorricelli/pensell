@@ -121,10 +121,10 @@ export default function Layout({ children, currentPageName }) {
               {isAuthenticated &&
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="rounded-full relative h-8 w-8 flex items-center justify-center hover:bg-slate-100 transition-colors">
-                    <Menu className="w-5 h-5" />
+                  <button className="rounded-full relative h-8 w-8 flex items-center justify-center hover:bg-slate-100 transition-colors p-0">
+                    <Menu className="w-5 h-5 pointer-events-none" />
                     {unreadCount > 0 &&
-                  <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
+                  <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs pointer-events-none">
                         {unreadCount}
                       </Badge>
                   }
