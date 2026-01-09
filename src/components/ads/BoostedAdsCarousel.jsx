@@ -1,10 +1,13 @@
-import React, { useRef } from 'react';
-import { ChevronLeft, ChevronRight, Zap } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight, Zap, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import AdCard from './AdCard';
+import { Link } from 'react-router-dom';
+import { createPageUrl } from '@/utils';
+import moment from 'moment';
 
 export default function BoostedAdsCarousel({ ads, onFavorite, favorites = [] }) {
   const scrollRef = useRef(null);
+  const [timers, setTimers] = useState({});
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -16,7 +19,41 @@ export default function BoostedAdsCarousel({ ads, onFavorite, favorites = [] }) 
     }
   };
 
+  useEffect(() => {
+    const updateTimers = () => {
+      const newTimers = {};
+      ads.forEach(ad => {
+        if (ad.boost_expires_at) {
+          const now = moment();
+          const expires = moment(ad.boost_expires_at);
+          const diff = expires.diff(now);
+          
+          if (diff > 0) {
+            const duration = moment.duration(diff);
+            if (duration.days() > 0) {
+              newTimers[ad.id] = `${duration.days()}d ${duration.hours()}h`;
+            } else {
+              newTimers[ad.id] = `${duration.hours()}h ${duration.minutes()}m`;
+            }
+          }
+        }
+      });
+      setTimers(newTimers);
+    };
+
+    updateTimers();
+    const interval = setInterval(updateTimers, 60000);
+    return () => clearInterval(interval);
+  }, [ads]);
+
   if (!ads || ads.length === 0) return null;
+
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(price);
+  };
 
   return (
     <div className="relative">
@@ -59,13 +96,39 @@ export default function BoostedAdsCarousel({ ads, onFavorite, favorites = [] }) 
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {ads.map((ad) => (
-          <div key={ad.id} className="flex-shrink-0 w-72 snap-start">
-            <AdCard 
-              ad={ad} 
-              onFavorite={onFavorite}
-              isFavorited={favorites.some(f => f.ad_id === ad.id)}
-            />
-          </div>
+          <Link 
+            key={ad.id}
+            to={createPageUrl(`AdDetails?id=${ad.id}`)}
+            className="flex-shrink-0 w-72 snap-start"
+          >
+            <div className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer h-full">
+              <div className="relative aspect-square">
+                {ad.images?.[0] ? (
+                  <img src={ad.images[0]} alt="" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-slate-100" />
+                )}
+                <div className="absolute top-3 left-3">
+                  <div className="bg-gradient-to-r from-amber-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-lg">
+                    <Zap className="w-3 h-3" />
+                    Destaque
+                  </div>
+                </div>
+                {timers[ad.id] && (
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <div className="bg-black/70 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5">
+                      <Clock className="w-3 h-3" />
+                      Expira em {timers[ad.id]}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="p-4">
+                <h3 className="font-semibold text-slate-800 truncate mb-1">{ad.title}</h3>
+                <p className="text-lg font-bold text-indigo-600">{formatPrice(ad.price)}</p>
+              </div>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
