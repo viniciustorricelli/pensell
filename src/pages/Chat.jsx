@@ -83,7 +83,8 @@ export default function Chat() {
       'created_date'
     ),
     enabled: !!conversationId,
-    refetchInterval: 3000
+    staleTime: 5000,
+    refetchInterval: 8000
   });
 
   // Mark messages as read

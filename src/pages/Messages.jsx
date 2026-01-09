@@ -62,7 +62,8 @@ export default function Messages() {
       );
     },
     enabled: !!user,
-    refetchInterval: 5000
+    staleTime: 10000,
+    refetchInterval: 15000
   });
 
   const filteredConversations = conversations.filter(convo => {

@@ -86,8 +86,9 @@ export default function Layout({ children, currentPageName }) {
       );
     },
     enabled: !!user,
-    refetchInterval: 10000
-  });
+    staleTime: 15000,
+    refetchInterval: 30000
+    });
 
   const unreadCount = unreadConversations.length;
 

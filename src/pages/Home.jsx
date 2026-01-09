@@ -51,7 +51,8 @@ export default function Home() {
       );
     },
     enabled: !!user?.current_community_id,
-    refetchInterval: 30000
+    staleTime: 60000,
+    refetchInterval: 120000
   });
 
   // Fetch regular ads with pagination
@@ -81,7 +82,8 @@ export default function Home() {
       const skip = (page - 1) * 10;
       return allAds.slice(skip, skip + 10);
     },
-    enabled: !!user?.current_community_id
+    enabled: !!user?.current_community_id,
+    staleTime: 30000
   });
 
   // Update allAds when regularAds changes
@@ -100,7 +102,8 @@ export default function Home() {
   const { data: favorites = [] } = useQuery({
     queryKey: ['favorites', user?.id],
     queryFn: () => base44.entities.Favorite.filter({ user_id: user.id }),
-    enabled: !!user
+    enabled: !!user,
+    staleTime: 60000
   });
 
   const handleFavorite = async (ad) => {
