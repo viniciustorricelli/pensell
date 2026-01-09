@@ -363,7 +363,7 @@ export default function Layout({ children, currentPageName }) {
                   isActive ? "text-blue-600" : "text-slate-500"
                 )}>
 
-                <div className="relative">
+                <div className="relative flex items-center justify-center">
                   <Icon className="w-5 h-5" />
                   {item.badge > 0 &&
                   <Badge className="absolute -top-2 -right-2 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
