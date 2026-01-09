@@ -152,7 +152,8 @@ export default function CreateAd() {
       return;
     }
 
-    setIsSubmitting(true);
+    try {
+      setIsSubmitting(true);
     try {
       if (!user.current_community_id) {
         toast.error('Selecione uma comunidade primeiro');
