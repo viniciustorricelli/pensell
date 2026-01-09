@@ -92,7 +92,7 @@ export default function Layout({ children, currentPageName }) {
   const unreadCount = unreadConversations.length;
 
   const navItems = [
-  { name: 'Home', icon: Home, page: 'Home' },
+  { name: 'Home', icon: () => <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/4e2d3dd4d_CpiadePenSell2.jpg" alt="Home" className="w-5 h-5 object-contain" />, page: 'Home' },
   { name: 'Anunciar', icon: PlusCircle, page: 'CreateAd', highlight: true }];
 
 
@@ -121,14 +121,14 @@ export default function Layout({ children, currentPageName }) {
               {isAuthenticated &&
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-full relative h-12 w-12">
+                  <button className="rounded-full relative h-10 w-10 flex items-center justify-center hover:bg-slate-100 transition-colors">
                     <Menu className="w-6 h-6" />
                     {unreadCount > 0 &&
                   <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
                         {unreadCount}
                       </Badge>
                   }
-                  </Button>
+                  </button>
                 </DropdownMenuTrigger>
                   <DropdownMenuContent align="start" className="w-56">
                     <DropdownMenuItem asChild>
@@ -244,14 +244,14 @@ export default function Layout({ children, currentPageName }) {
             {isAuthenticated &&
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-12 w-12 relative">
+                <button className="h-10 w-10 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors relative">
                   <Menu className="w-6 h-6" />
                   {unreadCount > 0 &&
                 <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
                       {unreadCount}
                     </Badge>
                 }
-                </Button>
+                </button>
               </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-56">
                   <DropdownMenuItem asChild>

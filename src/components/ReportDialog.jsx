@@ -26,19 +26,13 @@ export default function ReportDialog({ open, onOpenChange, type, itemId, itemTit
     try {
       const user = await base44.auth.me();
       
-      await base44.integrations.Core.SendEmail({
+      const result = await base44.integrations.Core.SendEmail({
         to: 'vinicius.ts16@gmail.com',
-        subject: `Denúncia: ${type} - ${itemTitle || itemId}`,
-        body: `Denúncia de ${type}
-
-ID: ${itemId}
-Título: ${itemTitle || 'N/A'}
-
-Denunciado por: ${user.full_name} (${user.email})
-
-Descrição:
-${description}`
+        subject: `Denuncia ${type}`,
+        body: `ID: ${itemId}, Titulo: ${itemTitle}, Usuario: ${user.full_name} (${user.email}), Descricao: ${description}`
       });
+      
+      console.log('Resultado do envio:', result);
 
       toast.success('Denúncia enviada com sucesso');
       setDescription('');
