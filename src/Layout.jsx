@@ -330,7 +330,7 @@ export default function Layout({ children, currentPageName }) {
       </header>
 
       {/* Main Content */}
-      <main className="pt-14 md:pt-16 pb-20 md:pb-8">
+      <main className="md:pt-16 pb-20 md:pb-8 pt-14">
         {children}
       </main>
 
