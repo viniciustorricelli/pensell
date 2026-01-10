@@ -155,13 +155,14 @@ export default function SelectCommunity() {
             )}
           </Button>
 
-          {/* Footer */}
-          <div className="text-center mt-3">
-            <p className="text-gray-600 text-sm mb-2">Não encontrou sua instituição?</p>
+          {/* Info and Request */}
+          <div className="text-center mt-3 space-y-2">
+            <p className="text-gray-600 text-sm">Não encontrou sua instituição?</p>
+            <p className="text-gray-500 text-xs">Pode ser igreja, bairro, condomínio, universidade...</p>
             <Button
-              variant="link"
+              variant="outline"
               onClick={() => setShowRequestDialog(true)}
-              className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+              className="w-full text-blue-600 hover:text-blue-700 border-blue-300 hover:bg-blue-50"
             >
               Solicitar nova comunidade
             </Button>
