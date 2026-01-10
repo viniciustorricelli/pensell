@@ -307,15 +307,16 @@ export default function Layout({ children, currentPageName }) {
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
-              </DropdownMenu>
-            }
-          </div>
+                </DropdownMenu>
+                </div>
+                }
 
-          <Link to={createPageUrl('Home')} className="flex items-center justify-center">
-            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" alt="PenSell" className="h-10" />
-          </Link>
+                <Link to={createPageUrl('Home')} className="flex items-center justify-center">
+                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" alt="PenSell" className="h-10" />
+                </Link>
 
-          <div className="absolute right-0">
+                {!isAuthenticated &&
+                <div className="absolute right-2">
             {!isAuthenticated &&
             <Button
               size="sm"
