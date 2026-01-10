@@ -10,9 +10,11 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import RequestCommunityDialog from '@/components/RequestCommunityDialog';
 
 export default function CommunitySelector({ user, onCommunityChange }) {
   const [open, setOpen] = useState(false);
+  const [showRequestDialog, setShowRequestDialog] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: communities = [] } = useQuery({
@@ -94,8 +96,28 @@ export default function CommunitySelector({ user, onCommunityChange }) {
               </button>
             ))}
           </div>
+
+          <div className="border-t pt-4 text-center space-y-2">
+            <p className="text-gray-600 text-sm">Não encontrou sua instituição?</p>
+            <p className="text-gray-500 text-xs">Pode ser igreja, bairro, condomínio, universidade...</p>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setOpen(false);
+                setShowRequestDialog(true);
+              }}
+              className="w-full text-blue-600 hover:text-blue-700 border-blue-300 hover:bg-blue-50"
+            >
+              Solicitar nova comunidade
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
+
+      <RequestCommunityDialog 
+        open={showRequestDialog}
+        onOpenChange={setShowRequestDialog}
+      />
     </>
   );
 }
