@@ -268,29 +268,29 @@ export default function Layout({ children, currentPageName }) {
       {/* Mobile Header */}
       <header className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-slate-200 z-40">
         <div className="flex items-center justify-center h-14 relative">
-          {isAuthenticated &&
-          <div className="absolute left-2 z-20">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="h-12 w-12 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors p-0 bg-transparent border-0">
-                  <Menu className="w-6 h-6" />
-                  {unreadCount > 0 &&
-                <Badge className="absolute top-0 right-0 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
-                      {unreadCount}
-                    </Badge>
-                }
-                </button>
-              </DropdownMenuTrigger>
+          {isAuthenticated && (
+            <div className="absolute left-2 z-20">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="h-12 w-12 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors p-0 bg-transparent border-0">
+                    <Menu className="w-6 h-6" />
+                    {unreadCount > 0 && (
+                      <Badge className="absolute top-0 right-0 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
+                        {unreadCount}
+                      </Badge>
+                    )}
+                  </button>
+                </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-56">
                   <DropdownMenuItem asChild>
                     <Link to={createPageUrl('Messages')} className="flex items-center gap-2 cursor-pointer">
                       <MessageCircle className="w-4 h-4" />
                       Mensagens
-                      {unreadCount > 0 &&
-                    <Badge className="ml-auto h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-xs">
+                      {unreadCount > 0 && (
+                        <Badge className="ml-auto h-5 w-5 flex items-center justify-center p-0 bg-red-500 text-xs">
                           {unreadCount}
                         </Badge>
-                    }
+                      )}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
@@ -307,25 +307,25 @@ export default function Layout({ children, currentPageName }) {
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
-                </DropdownMenu>
-                </div>
-                }
+              </DropdownMenu>
+            </div>
+          )}
 
-                <Link to={createPageUrl('Home')} className="flex items-center justify-center">
-                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" alt="PenSell" className="h-10" />
-                </Link>
+          <Link to={createPageUrl('Home')} className="flex items-center justify-center">
+            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/695b603a6d9b50e34c2be229/b9a529274_1-removebg-preview.png" alt="PenSell" className="h-10" />
+          </Link>
 
-                {!isAuthenticated &&
-                <div className="absolute right-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => base44.auth.redirectToLogin()}
-                    className="rounded-full text-sm">
-                      Entrar
-                    </Button>
-                </div>
-                }
+          {!isAuthenticated && (
+            <div className="absolute right-2">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => base44.auth.redirectToLogin()}
+                className="rounded-full text-sm">
+                Entrar
+              </Button>
+            </div>
+          )}
         </div>
       </header>
 
