@@ -317,16 +317,15 @@ export default function Layout({ children, currentPageName }) {
 
                 {!isAuthenticated &&
                 <div className="absolute right-2">
-            {!isAuthenticated &&
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => base44.auth.redirectToLogin()}
-              className="rounded-full text-sm">
-                Entrar
-              </Button>
-            }
-          </div>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => base44.auth.redirectToLogin()}
+                    className="rounded-full text-sm">
+                      Entrar
+                    </Button>
+                </div>
+                }
         </div>
       </header>
 
