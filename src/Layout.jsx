@@ -268,14 +268,14 @@ export default function Layout({ children, currentPageName }) {
       {/* Mobile Header */}
       <header className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-slate-200 z-40">
         <div className="flex items-center justify-center h-14 relative">
-          <div className="absolute left-4">
-            {isAuthenticated &&
+          {isAuthenticated &&
+          <div className="absolute left-2 z-20">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="h-14 w-14 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors relative p-0">
-                  <Menu className="w-6 h-6 pointer-events-none" />
+                <button className="h-12 w-12 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors p-0 bg-transparent border-0">
+                  <Menu className="w-6 h-6" />
                   {unreadCount > 0 &&
-                <Badge className="absolute -top-1 -right-1 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs pointer-events-none">
+                <Badge className="absolute top-0 right-0 h-4 w-4 flex items-center justify-center p-0 bg-red-500 text-xs">
                       {unreadCount}
                     </Badge>
                 }
